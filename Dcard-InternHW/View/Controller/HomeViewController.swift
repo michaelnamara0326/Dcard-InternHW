@@ -90,19 +90,20 @@ class HomeViewController: UIViewController {
     }
     private func setupBinding() {
         self.viewModel.searchSubject.subscribe(onNext: { [unowned self] in
-            infoTableView.isHidden = ($0.resultCount == 0)
             infoModel = $0
             applySnapShot()
+            infoTableView.isHidden = false
         }).disposed(by: disposeBag)
         
         self.viewModel.statusSubject.subscribe(onNext: { [unowned self] in
             statusView.status = $0
+            infoTableView.isHidden = true
         }).disposed(by: disposeBag)
         
         self.resetButton.rx.tap.subscribe(onNext: { [unowned self] in
+            searchBar.text = ""
             statusView.status = .initial
             infoTableView.isHidden = true
-            searchBar.text = ""
         }).disposed(by: disposeBag)
     }
     
@@ -125,10 +126,8 @@ class HomeViewController: UIViewController {
             let items = result.map({ return Item.main($0) })
             snapShot.appendItems(items, toSection: .main)
         }
-        
         tableViewDataSource?.apply(snapShot, animatingDifferences: true)
     }
-
 }
 
 //  MARK: - TableView Property

@@ -15,10 +15,9 @@ class ItuneStoreViewModel {
     func search(term: String) {
         let completion: (ItuneStroeModel?, String, Error?, Bool) -> Void = { [weak self] data, msg, error, success in
             if success, let data = data {
+                self?.searchSubject.onNext(data)
                 if data.resultCount == 0 {
                     self?.statusSubject.onNext(.notFound)
-                } else {
-                    self?.searchSubject.onNext(data)
                 }
             } else {
                 print(error ?? "fetch music info error")

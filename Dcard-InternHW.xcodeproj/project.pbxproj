@@ -21,7 +21,6 @@
 		4C9F6743297C388200496DEF /* ItuneStoreModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9F6742297C388200496DEF /* ItuneStoreModel.swift */; };
 		4C9F6745297C396E00496DEF /* ItuneStoreViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9F6744297C396E00496DEF /* ItuneStoreViewModel.swift */; };
 		4C9F6748297C3EC500496DEF /* InfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9F6747297C3EC500496DEF /* InfoTableViewCell.swift */; };
-		4C9F674B297D2C8D00496DEF /* UIApplication + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9F674A297D2C8D00496DEF /* UIApplication + Extensions.swift */; };
 		4C9F674E297D3EA800496DEF /* UIViewController + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9F674D297D3EA800496DEF /* UIViewController + Extensions.swift */; };
 		4C9F6750297D432C00496DEF /* SearchStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9F674F297D432C00496DEF /* SearchStatusView.swift */; };
 		4CF82602297E83E20041BD32 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF82601297E83E20041BD32 /* NetworkManager.swift */; };
@@ -73,7 +72,6 @@
 		4C9F6742297C388200496DEF /* ItuneStoreModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItuneStoreModel.swift; sourceTree = "<group>"; };
 		4C9F6744297C396E00496DEF /* ItuneStoreViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItuneStoreViewModel.swift; sourceTree = "<group>"; };
 		4C9F6747297C3EC500496DEF /* InfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoTableViewCell.swift; sourceTree = "<group>"; };
-		4C9F674A297D2C8D00496DEF /* UIApplication + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication + Extensions.swift"; sourceTree = "<group>"; };
 		4C9F674D297D3EA800496DEF /* UIViewController + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController + Extensions.swift"; sourceTree = "<group>"; };
 		4C9F674F297D432C00496DEF /* SearchStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchStatusView.swift; sourceTree = "<group>"; };
 		4CF82601297E83E20041BD32 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
@@ -166,7 +164,6 @@
 			path = "Dcard-InternHWUITests";
 			sourceTree = "<group>";
 		};
-
 		4C9F6732297ACD1400496DEF /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -200,7 +197,6 @@
 				4C9F673C297C32C200496DEF /* UIFont + Extensions.swift */,
 				4C9F673E297C346D00496DEF /* Cell + Extensions.swift */,
 				4C9F6740297C355C00496DEF /* View + Extensions.swift */,
-				4C9F674A297D2C8D00496DEF /* UIApplication + Extensions.swift */,
 				4C9F674D297D3EA800496DEF /* UIViewController + Extensions.swift */,
 			);
 			path = Extensions;
@@ -504,7 +500,6 @@
 				4C9F6743297C388200496DEF /* ItuneStoreModel.swift in Sources */,
 				4C9F674E297D3EA800496DEF /* UIViewController + Extensions.swift in Sources */,
 				4C9F6736297C2EBA00496DEF /* HomeViewController.swift in Sources */,
-				4C9F674B297D2C8D00496DEF /* UIApplication + Extensions.swift in Sources */,
 				4C9F673F297C346D00496DEF /* Cell + Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
