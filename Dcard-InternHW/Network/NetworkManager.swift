@@ -18,19 +18,22 @@ protocol RouterType {
     
     var param: [String: Any]? { get }
     
+    var header: HTTPHeaders? { get }
 }
 
 struct NetworkManager<Router: RouterType> {
     
     func requestData<D: Decodable>(_ router: Router, completion: @escaping (D?, String, Error?, Bool) -> Void) {
         let urlString = router.baseURL + router.path
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
         
         AF.request(urlString,
                    method: router.method,
                    parameters: router.param,
                    encoding: router.encoding)
         .validate()
-        .responseDecodable(of: D.self) { (response) in
+        .responseDecodable(of: D.self, decoder: decoder) { (response) in
             switch response.result {
             case .success(let data):
                 completion(data, "", nil, true)

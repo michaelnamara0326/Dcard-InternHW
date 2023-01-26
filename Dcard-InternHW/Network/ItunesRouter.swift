@@ -9,7 +9,7 @@ import Alamofire
 
 enum ItunesRouter {
     case search(term: String)
-    case lookUp(traceId: Int)
+    case lookUp(trackId: Int)
 }
 
 extension ItunesRouter: RouterType {
@@ -44,12 +44,17 @@ extension ItunesRouter: RouterType {
                     "media": "music"
                 ]
             
-        case .lookUp(let traceId):
+        case .lookUp(let trackId):
             return
                 [
-                    "traceId": traceId
+                    "id": trackId
                 ]
         }
     }
 
+    var header: HTTPHeaders? {
+        let headers: HTTPHeaders = ["Content-Type": "application/json"]
+        return headers
+    }
+    
 }
