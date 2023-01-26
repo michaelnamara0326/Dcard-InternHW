@@ -19,6 +19,13 @@ struct ItuneStroeModel: Codable, Hashable {
         let artistViewUrl: URL?
         let collectionViewUrl: URL?
         let previewUrl: URL?
-        let artworkUrl100: String?
+        let artworkUrl100: URL?
+        let releaseDate: Date?
+//        var releaseDateFormat:String {
+//            let dateFormatter = DateFormatter()
+//            dateFormatter.locale = Locale(identifier: "zh_Hant_TW")
+//            dateFormatter.dateFormat = "yyyy/MM/dd"
+//            return dateFormatter.string(from: releaseDate ?? Date())
+//        }
     }
 }

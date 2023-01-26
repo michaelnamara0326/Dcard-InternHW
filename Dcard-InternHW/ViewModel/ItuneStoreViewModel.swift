@@ -36,6 +36,6 @@ class ItuneStoreViewModel {
             }
         }
         let service = NetworkManager<ItunesRouter>()
-        service.requestData(.lookUp(traceId: trackId), completion: completion)
+        service.requestData(.lookUp(trackId: trackId), completion: completion)
     }
 }

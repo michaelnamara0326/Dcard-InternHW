@@ -35,7 +35,9 @@ class HomeViewController: UIViewController {
         let tableView = UITableView()
         tableView.delegate = self
         tableView.isHidden = true
+        tableView.separatorStyle = .none
         tableView.backgroundColor = .white
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.register(InfoTableViewCell.self, forCellReuseIdentifier: InfoTableViewCell.cellIdentifier)
         return tableView
     }()
@@ -50,7 +52,6 @@ class HomeViewController: UIViewController {
 //  MARK: - Functions
     override func viewDidLoad() {
         super.viewDidLoad()
-//        self.hideKeyboardWhenTappedAround()
         setupUI()
         setupBinding()
         configureDataSource()
@@ -92,8 +93,11 @@ class HomeViewController: UIViewController {
         self.viewModel.searchSubject.subscribe(onNext: { [unowned self] in
             infoModel = $0
             applySnapShot()
-            infoTableView.isHidden = false
         }).disposed(by: disposeBag)
+        
+//        self.viewModel.lookupSubject.subscribe(onNext: { [unowned self] in
+//            MARK: TODO
+//        }).disposed(by: disposeBag)
         
         self.viewModel.statusSubject.subscribe(onNext: { [unowned self] in
             statusView.status = $0
@@ -126,7 +130,8 @@ class HomeViewController: UIViewController {
             let items = result.map({ return Item.main($0) })
             snapShot.appendItems(items, toSection: .main)
         }
-        tableViewDataSource?.apply(snapShot, animatingDifferences: true)
+        tableViewDataSource?.apply(snapShot, animatingDifferences: false)
+        infoTableView.isHidden = false
     }
 }
 
@@ -144,6 +149,9 @@ extension HomeViewController {
 extension HomeViewController: UITableViewDelegate, UIScrollViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("test")
+        if let id = infoModel?.results?[indexPath.row].trackId {
+            viewModel.lookUp(trackId: id)
+        }
     }
 }
 

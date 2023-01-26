@@ -63,7 +63,7 @@ class SearchStatusView: UIView {
         }
     }
     private func configure() {
-        self.statusImageView.image = UIImage(named: status.image)
+        self.statusImageView.image = status.image
         self.statusTitleLabel.text = status.title
         self.statusSubTitleLabel.text = status.subTitle
     }
@@ -74,14 +74,14 @@ extension SearchStatusView {
         case notFound
         case searching
         
-        var image: String {
+        var image: UIImage? {
             switch self {
             case .initial:
-                return "search_init"
+                return UIImage(named:"search_init")
             case .notFound:
-                return "search_notFound"
+                return UIImage(named:"search_notFound")
             case .searching:
-                return "search_searching"
+                return UIImage(named:"search_searching")
             }
         }
         var title: String {
