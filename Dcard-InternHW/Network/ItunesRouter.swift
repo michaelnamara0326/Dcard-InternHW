@@ -47,7 +47,8 @@ extension ItunesRouter: RouterType {
         case .lookUp(let trackId):
             return
                 [
-                    "id": trackId
+                    "id": trackId,
+                    "country": "tw"
                 ]
         }
     }

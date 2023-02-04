@@ -64,8 +64,8 @@ class SearchStatusView: UIView {
     }
     private func configure() {
         self.statusImageView.image = status.image
-        self.statusTitleLabel.text = status.title
-        self.statusSubTitleLabel.text = status.subTitle
+        self.statusTitleLabel.text = status.message.title
+        self.statusSubTitleLabel.text = status.message.subtitle
     }
 }
 extension SearchStatusView {
@@ -84,24 +84,14 @@ extension SearchStatusView {
                 return UIImage(named:"search_searching")
             }
         }
-        var title: String {
+        var message: (title: String, subtitle: String) {
             switch self {
             case .initial:
-                return "結果將顯示於此"
+                return ("結果將顯示於此", "請於上方搜尋列尋找您喜愛的藝人、歌曲")
             case .notFound:
-                return "查無結果"
+                return ("查無結果", "哎呀，請再重新輸入一次關鍵字")
             case .searching:
-                return "搜尋中..."
-            }
-        }
-        var subTitle: String {
-            switch self {
-            case .initial:
-                return "請於上方搜尋列尋找您喜愛的藝人、歌曲"
-            case .notFound:
-                return "哎呀，請再重新輸入一次關鍵字"
-            case .searching:
-                return "請稍候"
+                return ("搜尋中...", "請稍候")
             }
         }
     }
