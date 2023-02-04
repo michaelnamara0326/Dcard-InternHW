@@ -81,7 +81,6 @@ class InfoTableViewCell: UITableViewCell {
             make.top.leading.equalToSuperview().offset(16)
             make.trailing.equalToSuperview().offset(-16)
             make.bottom.equalToSuperview().offset(-8)
-            make.height.equalTo(112)
         }
         collectionImageView.snp.makeConstraints { make in
             make.top.leading.equalToSuperview()
@@ -124,10 +123,12 @@ class InfoTableViewCell: UITableViewCell {
         }
     }
     func configure(model: ItuneStroeModel.Result) {
-        self.collectionImageView.sd_setImage(with: model.artworkUrl100)
-        infoTitles[Info.artist.rawValue].text = model.artistName
-        infoTitles[Info.track.rawValue].text = model.trackName
-        infoTitles[Info.collection.rawValue].text = model.collectionName
+        DispatchQueue.main.async {
+            self.collectionImageView.sd_setImage(with: model.artworkUrl100)
+            self.infoTitles[Info.artist.rawValue].text = model.artistName
+            self.infoTitles[Info.track.rawValue].text = model.trackName
+            self.infoTitles[Info.collection.rawValue].text = model.collectionName
+        }
     }
 }
 extension InfoTableViewCell {

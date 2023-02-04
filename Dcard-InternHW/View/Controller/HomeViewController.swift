@@ -37,6 +37,7 @@ class HomeViewController: UIViewController {
         tableView.isHidden = true
         tableView.separatorStyle = .none
         tableView.backgroundColor = .white
+        tableView.keyboardDismissMode = .onDrag
         tableView.rowHeight = UITableView.automaticDimension
         tableView.register(InfoTableViewCell.self, forCellReuseIdentifier: InfoTableViewCell.cellIdentifier)
         return tableView
@@ -55,6 +56,7 @@ class HomeViewController: UIViewController {
         setupUI()
         setupBinding()
         configureDataSource()
+        hideKeyboardWhenTappedAround()
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -95,13 +97,17 @@ class HomeViewController: UIViewController {
             applySnapShot()
         }).disposed(by: disposeBag)
         
-//        self.viewModel.lookupSubject.subscribe(onNext: { [unowned self] in
-//            MARK: TODO
-//        }).disposed(by: disposeBag)
-        
         self.viewModel.statusSubject.subscribe(onNext: { [unowned self] in
             statusView.status = $0
             infoTableView.isHidden = true
+        }).disposed(by: disposeBag)
+        
+        self.viewModel.lookupSubject.subscribe(onNext: { [unowned self] in
+            if let model = $0.results?.first {
+                let vc = DetailInfoViewController(model: model)
+                vc.modalPresentationStyle = .pageSheet
+                self.present(vc, animated: true)
+            }
         }).disposed(by: disposeBag)
         
         self.resetButton.rx.tap.subscribe(onNext: { [unowned self] in
@@ -130,8 +136,9 @@ class HomeViewController: UIViewController {
             let items = result.map({ return Item.main($0) })
             snapShot.appendItems(items, toSection: .main)
         }
-        tableViewDataSource?.apply(snapShot, animatingDifferences: false)
-        infoTableView.isHidden = false
+        tableViewDataSource?.apply(snapShot) {
+            self.infoTableView.isHidden = false
+        }
     }
 }
 
@@ -148,7 +155,6 @@ extension HomeViewController {
 //  MARK: TableView Delegate
 extension HomeViewController: UITableViewDelegate, UIScrollViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("test")
         if let id = infoModel?.results?[indexPath.row].trackId {
             viewModel.lookUp(trackId: id)
         }
@@ -159,10 +165,8 @@ extension HomeViewController: UITableViewDelegate, UIScrollViewDelegate {
 extension HomeViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
-    }
-    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         guard let term = searchBar.text else { return }
-        viewModel.search(term: term)
+        viewModel.search(term: term.replacingOccurrences(of: " ", with: "+"))
     }
 }
 
