@@ -26,7 +26,6 @@
 		4C9F674E297D3EA800496DEF /* UIViewController + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9F674D297D3EA800496DEF /* UIViewController + Extensions.swift */; };
 		4C9F6750297D432C00496DEF /* SearchStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9F674F297D432C00496DEF /* SearchStatusView.swift */; };
 		4CAA896C29828F390053317A /* DetailInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAA896B29828F390053317A /* DetailInfoViewController.swift */; };
-		4CAA896E298293E30053317A /* DetailInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAA896D298293E30053317A /* DetailInfoTableViewCell.swift */; };
 		4CF82602297E83E20041BD32 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF82601297E83E20041BD32 /* NetworkManager.swift */; };
 		4CF82604297E84050041BD32 /* ItunesRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF82603297E84050041BD32 /* ItunesRouter.swift */; };
 		928B076A01E5155E5C1B7A6B /* Pods_Dcard_InternHWTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A5F08C29DC9835EB88B9E18 /* Pods_Dcard_InternHWTests.framework */; };
@@ -81,7 +80,6 @@
 		4C9F674D297D3EA800496DEF /* UIViewController + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController + Extensions.swift"; sourceTree = "<group>"; };
 		4C9F674F297D432C00496DEF /* SearchStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchStatusView.swift; sourceTree = "<group>"; };
 		4CAA896B29828F390053317A /* DetailInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailInfoViewController.swift; sourceTree = "<group>"; };
-		4CAA896D298293E30053317A /* DetailInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailInfoTableViewCell.swift; sourceTree = "<group>"; };
 		4CF82601297E83E20041BD32 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		4CF82603297E84050041BD32 /* ItunesRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItunesRouter.swift; sourceTree = "<group>"; };
 		643799AA19B9093EA31B61B1 /* Pods-Dcard-InternHW.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dcard-InternHW.release.xcconfig"; path = "Target Support Files/Pods-Dcard-InternHW/Pods-Dcard-InternHW.release.xcconfig"; sourceTree = "<group>"; };
@@ -216,7 +214,6 @@
 			isa = PBXGroup;
 			children = (
 				4C9F6747297C3EC500496DEF /* InfoTableViewCell.swift */,
-				4CAA896D298293E30053317A /* DetailInfoTableViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -514,7 +511,6 @@
 				4C9F6743297C388200496DEF /* ItuneStoreModel.swift in Sources */,
 				4C9F674E297D3EA800496DEF /* UIViewController + Extensions.swift in Sources */,
 				4C9F6736297C2EBA00496DEF /* HomeViewController.swift in Sources */,
-				4CAA896E298293E30053317A /* DetailInfoTableViewCell.swift in Sources */,
 				4C9F673F297C346D00496DEF /* Cell + Extensions.swift in Sources */,
 				4C9DC386298E5113002A3182 /* Date + Extensions.swift in Sources */,
 			);
