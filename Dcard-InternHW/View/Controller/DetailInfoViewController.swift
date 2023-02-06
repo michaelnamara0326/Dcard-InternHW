@@ -130,17 +130,20 @@ class DetailInfoViewController: UIViewController {
         playButton.setImage(UIImage(named: "music_play"), for: .normal)
     }
 }
-extension DetailInfoViewController {
-    enum Detail: String, CaseIterable {
-        case artist = "歌手"
-        case track = "歌曲名稱"
-        case collection = "專輯"
-        case releaseDate = "發行日期"
-    }
-}
+
 extension DetailInfoViewController: moreButtonDelegate {
-    func didTapMoreButton() {
-        // todo: present preview webview
-        print("did tap")
+    func didTapMoreButton(type: String) {
+        switch type {
+        case "歌手":
+            let vc = PreviewViewController(title: model.artistName, url: model.artistViewUrl)
+            vc.modalPresentationStyle = .overFullScreen
+            present(vc, animated: true)
+        case "收錄專輯":
+            let vc = PreviewViewController(title: model.collectionName, url: model.collectionViewUrl)
+            vc.modalPresentationStyle = .overFullScreen
+            present(vc, animated: true)
+        default:
+            break
+        }
     }
 }

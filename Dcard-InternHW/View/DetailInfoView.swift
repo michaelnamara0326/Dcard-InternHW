@@ -9,12 +9,10 @@ import UIKit
 
 
 protocol moreButtonDelegate: AnyObject {
-    func didTapMoreButton()
+    func didTapMoreButton(type: String)
 }
 class DetailInfoView: UIView {
     weak var delegate: moreButtonDelegate?
-    var mainText: String?
-    var valueText: String?
     private let frameView: UIView = {
         let view = UIView()
         view.isUserInteractionEnabled = true
@@ -94,6 +92,6 @@ class DetailInfoView: UIView {
         }
     }
     @objc private func moreButtonDidTap(_ sender: UIButton) {
-        delegate?.didTapMoreButton()
+        delegate?.didTapMoreButton(type: mainLabel.text ?? "")
     }
 }

@@ -70,7 +70,7 @@ class HomeViewController: UIViewController {
         navigationView.snp.makeConstraints { make in
             make.top.equalTo(view)
             make.leading.trailing.equalToSuperview()
-            make.height.equalTo(120) // TODO - status bar height + 60
+            make.height.equalTo(120)
         }
         searchBar.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(16)
