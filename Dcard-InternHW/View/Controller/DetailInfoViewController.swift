@@ -77,7 +77,10 @@ class DetailInfoViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
         configure()
+        /// listening when music was end
         NotificationCenter.default.addObserver(self, selector: #selector(musicPlayerWhenFinish), name: .AVPlayerItemDidPlayToEndTime, object: musicPlayer.currentItem)
+        /// avoid when phone on silent mode
+        try! AVAudioSession.sharedInstance().setCategory(.playback)
     }
     
     private func setupUI() {
