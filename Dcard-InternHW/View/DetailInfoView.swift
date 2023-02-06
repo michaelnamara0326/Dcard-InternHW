@@ -8,11 +8,11 @@
 import UIKit
 
 
-protocol moreButtonDelegate {
+protocol moreButtonDelegate: AnyObject {
     func didTapMoreButton()
 }
 class DetailInfoView: UIView {
-    var delegate: moreButtonDelegate?
+    weak var delegate: moreButtonDelegate?
     var mainText: String?
     var valueText: String?
     private let frameView: UIView = {
@@ -21,7 +21,7 @@ class DetailInfoView: UIView {
         return view
     }()
     
-    private let mainTitle: UILabel = {
+    private let mainLabel: UILabel = {
         let label = UILabel()
         label.textColor = .customBlack
         label.textAlignment = .left
@@ -30,11 +30,12 @@ class DetailInfoView: UIView {
         return label
     }()
     
-    private let valueTitle: UILabel = {
+    private let contentLabel: UILabel = {
         let label = UILabel()
         label.textColor = .black
         label.textAlignment = .left
-        label.numberOfLines = 1
+        label.numberOfLines = 0
+        label.lineBreakMode = .byCharWrapping
         label.font = UIFont.PingFangTC(fontSize: 16, weight: .Medium)
         return label
     }()
@@ -51,49 +52,46 @@ class DetailInfoView: UIView {
         view.backgroundColor = .lightGray
         return view
     }()
-    init(main: String, value: String) {
-        self.mainText = main
-        self.valueText = value
+    
+    init(main: String, value: String, moreButtonHide: Bool = false) {
         super.init(frame: .zero)
-        
+        mainLabel.text = main
+        contentLabel.text = value
+        moreButton.isHidden = moreButtonHide
         setupUI()
-        configure()
     }
-//    override init(frame: CGRect) {
-//        super.init(frame: frame)
-//        setupUI()
-//        configure()
-//    }
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
     
     private func setupUI() {
-        addSubviews([mainTitle, valueTitle, moreButton, seperatorView])
+        addSubviews([mainLabel, contentLabel, moreButton, seperatorView])
         
-        mainTitle.snp.makeConstraints { make in
+        mainLabel.snp.makeConstraints { make in
             make.top.leading.equalToSuperview()
-            make.bottom.equalTo(valueTitle.snp.top).offset(-4)
+            make.bottom.equalTo(contentLabel.snp.top).offset(-4)
         }
-        valueTitle.snp.makeConstraints { make in
-            make.leading.equalToSuperview()
-            make.bottom.equalTo(seperatorView.snp.top).offset(-8)
+        contentLabel.snp.makeConstraints { make in
+            if moreButton.isHidden {
+                make.leading.equalToSuperview()
+                make.trailing.equalToSuperview()
+            } else {
+                make.leading.equalToSuperview()
+                make.trailing.equalTo(moreButton.snp.leading).offset(-4)
+            }
         }
         moreButton.snp.makeConstraints { make in
-            make.centerY.bottom.equalTo(valueTitle)
             make.trailing.equalToSuperview()
+            make.bottom.equalTo(contentLabel)
             make.width.equalTo(60)
             make.height.equalTo(25)
         }
         seperatorView.snp.makeConstraints { make in
+            make.top.equalTo(moreButton.snp.bottom).offset(4)
             make.leading.bottom.trailing.equalToSuperview()
             make.height.equalTo(1)
         }
-    }
-    private func configure() {
-        mainTitle.text = mainText
-        valueTitle.text = valueText
     }
     @objc private func moreButtonDidTap(_ sender: UIButton) {
         delegate?.didTapMoreButton()
