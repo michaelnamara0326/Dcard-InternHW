@@ -16,6 +16,10 @@ class HomeViewController: UIViewController {
     private var infoModel: ItuneStroeModel?
     private let disposeBag = DisposeBag()
     private var tableViewDataSource: UITableViewDiffableDataSource<Section, Item>?
+    var pageNumber = 1
+    let itemLimitPerPage = 10
+    var isLoading = false
+
     private let navigationView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
@@ -42,12 +46,32 @@ class HomeViewController: UIViewController {
         tableView.register(InfoTableViewCell.self, forCellReuseIdentifier: InfoTableViewCell.cellIdentifier)
         return tableView
     }()
+    
+    private let activityIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView(style: .medium)
+        indicator.hidesWhenStopped = true
+        return indicator
+    }()
+    
+    private let noMoreDataLabel: UILabel = {
+        let label = UILabel()
+        label.frame.origin.x = 16
+        label.frame.size.height = 20
+        label.numberOfLines = 1
+        label.text = "已經沒有更多內容啦"
+        label.font = UIFont.PingFangTC(fontSize: 14, weight: .Medium)
+        label.textColor = .customBlue
+        label.textAlignment = .left
+        return label
+    }()
+    
     private let resetButton: UIButton = {
         let button = UIButton()
         button.setTitle("重置", for: .normal)
         button.setTitleColor(.systemBlue, for: .normal)
         return button
     }()
+
     private let statusView = SearchStatusView()
     
 //  MARK: - Functions
@@ -114,6 +138,7 @@ class HomeViewController: UIViewController {
             searchBar.text = ""
             statusView.status = .initial
             infoTableView.isHidden = true
+            pageNumber = 1
         }).disposed(by: disposeBag)
     }
     
@@ -130,19 +155,28 @@ class HomeViewController: UIViewController {
     
     private func applySnapShot() {
         var snapShot = NSDiffableDataSourceSnapshot<Section, Item>()
-        snapShot.appendSections([.main])
+        var maxIndex = pageNumber * itemLimitPerPage
         
-        if let result = infoModel?.results {
+        snapShot.appendSections([.main])
+        if let count = infoModel?.resultCount,
+           maxIndex > count {
+            maxIndex = count
+            infoTableView.tableFooterView = noMoreDataLabel
+        }
+        if let result = infoModel?.results?.prefix(upTo: maxIndex) {
             let items = result.map({ return Item.main($0) })
             snapShot.appendItems(items, toSection: .main)
         }
-        tableViewDataSource?.apply(snapShot) {
+        tableViewDataSource?.apply(snapShot, animatingDifferences: true) {
+            self.pageNumber += 1
             self.infoTableView.isHidden = false
+            self.isLoading = false
+            self.activityIndicator.stopAnimating()
         }
     }
 }
 
-//  MARK: - TableView Property
+//  MARK: - TableView Datasource
 extension HomeViewController {
     private enum Section {
         case main
@@ -159,6 +193,24 @@ extension HomeViewController: UITableViewDelegate, UIScrollViewDelegate {
             viewModel.lookUp(trackId: id)
         }
     }
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        let offset = scrollView.contentOffset.y
+        let contentHeight = scrollView.contentSize.height
+        let tableHeight = scrollView.frame.height
+        let distanceToBottom = contentHeight - offset - tableHeight
+        
+        if contentHeight > tableHeight && distanceToBottom < 0 &&  !isLoading {
+            isLoading = true
+            activityIndicator.startAnimating()
+            infoTableView.tableFooterView = activityIndicator
+            
+            // simulate the delay of fetching API
+            DispatchQueue.main.asyncAfter(deadline: .now() + Double.random(in: 0.5 ..< 2)) {
+                self.applySnapShot()
+            }
+        }
+    }
 }
 
 //  MARK: - TextField Delegate
@@ -167,6 +219,8 @@ extension HomeViewController: UISearchBarDelegate {
         searchBar.resignFirstResponder()
         guard let term = searchBar.text else { return }
         viewModel.search(term: term.replacingOccurrences(of: " ", with: "+"))
+        self.infoTableView.setContentOffset(.zero, animated: true)
+        self.pageNumber = 1
     }
 }
 
