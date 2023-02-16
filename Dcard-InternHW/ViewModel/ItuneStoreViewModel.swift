@@ -28,6 +28,7 @@ class ItuneStoreViewModel {
         let service = NetworkManager<ItunesRouter>()
         service.requestData(.search(term: term), completion: completion)
     }
+    
     func lookUp(trackId: Int) {
         let completion: (ItuneStroeModel?, String, Error?, Bool) -> Void = { [weak self] data, msg, error, success in
             if success, let data = data {

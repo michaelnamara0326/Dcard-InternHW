@@ -16,15 +16,16 @@ class HomeViewController: UIViewController {
     private var infoModel: ItuneStroeModel?
     private let disposeBag = DisposeBag()
     private var tableViewDataSource: UITableViewDiffableDataSource<Section, Item>?
-    var pageNumber = 1
-    let itemLimitPerPage = 10
-    var isLoading = false
+    private var isLoading = false
+    private var pageNumber = 1
+    private let pageItemLimit = 10
 
     private let navigationView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
         return view
     }()
+    
     private lazy var searchBar: UISearchBar = {
         let searchBar = UISearchBar()
         searchBar.delegate = self
@@ -35,6 +36,7 @@ class HomeViewController: UIViewController {
         searchBar.searchTextField.textColor = .customGray
         return searchBar
     }()
+    
     private lazy var infoTableView: UITableView = {
         let tableView = UITableView()
         tableView.delegate = self
@@ -82,10 +84,12 @@ class HomeViewController: UIViewController {
         configureDataSource()
         hideKeyboardWhenTappedAround()
     }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         navigationView.addShadow(opacity: 0.16, offset: CGSize(width: 0, height: 2), radius: 2)
     }
+    
     private func setupUI() {
         view.backgroundColor = .customBgColor
         view.addSubviews([statusView, infoTableView, navigationView])
@@ -115,6 +119,7 @@ class HomeViewController: UIViewController {
             make.bottom.leading.trailing.equalToSuperview()
         }
     }
+    
     private func setupBinding() {
         self.viewModel.searchSubject.subscribe(onNext: { [unowned self] in
             infoModel = $0
@@ -130,6 +135,7 @@ class HomeViewController: UIViewController {
             if let model = $0.results?.first {
                 let vc = DetailInfoViewController(model: model)
                 vc.modalPresentationStyle = .pageSheet
+                modalPresentationCapturesStatusBarAppearance = true
                 self.present(vc, animated: true)
             }
         }).disposed(by: disposeBag)
@@ -155,9 +161,9 @@ class HomeViewController: UIViewController {
     
     private func applySnapShot() {
         var snapShot = NSDiffableDataSourceSnapshot<Section, Item>()
-        var maxIndex = pageNumber * itemLimitPerPage
-        
+        var maxIndex = pageNumber * pageItemLimit
         snapShot.appendSections([.main])
+        
         if let count = infoModel?.resultCount,
            maxIndex > count {
             maxIndex = count
@@ -176,7 +182,7 @@ class HomeViewController: UIViewController {
     }
 }
 
-//  MARK: - TableView Datasource
+//  MARK: - TableView Property
 extension HomeViewController {
     private enum Section {
         case main
@@ -186,7 +192,7 @@ extension HomeViewController {
     }
 }
 
-//  MARK: TableView Delegate
+//  MARK: - TableView Delegate
 extension HomeViewController: UITableViewDelegate, UIScrollViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let id = infoModel?.results?[indexPath.row].trackId {
@@ -218,9 +224,11 @@ extension HomeViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
         guard let term = searchBar.text else { return }
-        viewModel.search(term: term.replacingOccurrences(of: " ", with: "+"))
-        self.infoTableView.setContentOffset(.zero, animated: true)
-        self.pageNumber = 1
+        DispatchQueue.main.async {
+            self.pageNumber = 1
+            self.infoTableView.setContentOffset(.zero, animated: true)
+            self.viewModel.search(term: term.replacingOccurrences(of: " ", with: "+"))
+        }
     }
 }
 

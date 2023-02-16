@@ -9,6 +9,7 @@ import UIKit
 import AVKit
 
 class DetailInfoViewController: UIViewController {
+// MARK: - Init Property
     private let model: ItuneStroeModel.Result
     private var isPlaying: Bool = false
     
@@ -60,6 +61,7 @@ class DetailInfoViewController: UIViewController {
     private lazy var trackView = DetailInfoView(main: "歌曲名稱", value: model.trackName ?? "-", moreButtonHide: true)
     private lazy var releaseDateView = DetailInfoView(main: "發行日期", value: model.releaseDate?.customDateFormat(to: "yyyy/MM/dd") ?? "-", moreButtonHide: true)
     
+//MARK: - View Cycle
     init(model: ItuneStroeModel.Result) {
         self.model = model
         super.init(nibName: nil, bundle: nil)
@@ -83,6 +85,7 @@ class DetailInfoViewController: UIViewController {
         try! AVAudioSession.sharedInstance().setCategory(.playback)
     }
     
+//MARK: - Functions
     private func setupUI() {
         view.backgroundColor = .white
         view.addSubviews([collectionImageView, titleLabel, detailInfoStackView])
@@ -134,6 +137,7 @@ class DetailInfoViewController: UIViewController {
     }
 }
 
+// MARK: - Delegate
 extension DetailInfoViewController: moreButtonDelegate {
     func didTapMoreButton(type: String) {
         switch type {
