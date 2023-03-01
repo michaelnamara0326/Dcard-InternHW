@@ -12,9 +12,3 @@ extension UITableViewCell {
         return String(describing: self)
     }
 }
-
-extension UICollectionViewCell {
-    static var cellIdentifier: String {
-        return String(describing: self)
-    }
-}

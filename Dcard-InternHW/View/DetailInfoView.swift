@@ -9,9 +9,11 @@ import UIKit
 
 
 protocol moreButtonDelegate: AnyObject {
-    func didTapMoreButton(type: String)
+    func didTapMoreButton(title: String)
 }
+
 class DetailInfoView: UIView {
+    // MARK: - Init property
     weak var delegate: moreButtonDelegate?
     private let frameView: UIView = {
         let view = UIView()
@@ -51,10 +53,11 @@ class DetailInfoView: UIView {
         return view
     }()
     
-    init(main: String, value: String, moreButtonHide: Bool = false) {
+    // MARK: - View Cycle
+    init(main: String, content: String, moreButtonHide: Bool = false) {
         super.init(frame: .zero)
         mainLabel.text = main
-        contentLabel.text = value
+        contentLabel.text = content
         moreButton.isHidden = moreButtonHide
         setupUI()
     }
@@ -63,6 +66,7 @@ class DetailInfoView: UIView {
         super.init(coder: coder)
     }
     
+    // MARK: - Function
     private func setupUI() {
         addSubviews([mainLabel, contentLabel, moreButton, seperatorView])
         
@@ -91,7 +95,8 @@ class DetailInfoView: UIView {
             make.height.equalTo(1)
         }
     }
+    
     @objc private func moreButtonDidTap(_ sender: UIButton) {
-        delegate?.didTapMoreButton(type: mainLabel.text ?? "")
+        delegate?.didTapMoreButton(title: mainLabel.text ?? "")
     }
 }

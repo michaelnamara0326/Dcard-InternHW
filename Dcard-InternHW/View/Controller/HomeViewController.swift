@@ -11,15 +11,15 @@ import RxSwift
 import RxCocoa
 
 class HomeViewController: UIViewController {
-//  MARK: - Init property
-    private let viewModel = ItuneStoreViewModel()
-    private var infoModel: ItuneStroeModel?
+    //  MARK: - Init property
+    private let viewModel = ItunesViewModel()
     private let disposeBag = DisposeBag()
     private var tableViewDataSource: UITableViewDiffableDataSource<Section, Item>?
+    private var searchResults = [ItunesModel.Result]()
     private var isLoading = false
     private var pageNumber = 1
     private let pageItemLimit = 10
-
+    
     private let navigationView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
@@ -57,13 +57,12 @@ class HomeViewController: UIViewController {
     
     private let noMoreDataLabel: UILabel = {
         let label = UILabel()
-        label.frame.origin.x = 16
         label.frame.size.height = 20
         label.numberOfLines = 1
         label.text = "已經沒有更多內容啦"
         label.font = UIFont.PingFangTC(fontSize: 14, weight: .Medium)
         label.textColor = .customBlue
-        label.textAlignment = .left
+        label.textAlignment = .center
         return label
     }()
     
@@ -76,7 +75,7 @@ class HomeViewController: UIViewController {
 
     private let statusView = SearchStatusView()
     
-//  MARK: - Functions
+    //  MARK: - View Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -90,6 +89,7 @@ class HomeViewController: UIViewController {
         navigationView.addShadow(opacity: 0.16, offset: CGSize(width: 0, height: 2), radius: 2)
     }
     
+    //  MARK: - Functions
     private func setupUI() {
         view.backgroundColor = .customBgColor
         view.addSubviews([statusView, infoTableView, navigationView])
@@ -121,30 +121,25 @@ class HomeViewController: UIViewController {
     }
     
     private func setupBinding() {
-        self.viewModel.searchSubject.subscribe(onNext: { [unowned self] in
-            infoModel = $0
-            applySnapShot()
+        self.viewModel.searchSubject.subscribe(onNext: { [unowned self]  in
+            self.searchResults = $0
+            self.applySnapShot()
+        }).disposed(by: disposeBag)
+        
+        self.viewModel.lookupSubject.subscribe(onNext: { [unowned self] in
+            let vc = DetailInfoViewController(model: $0)
+            vc.modalPresentationStyle = .pageSheet
+            modalPresentationCapturesStatusBarAppearance = true
+            self.present(vc, animated: true)
         }).disposed(by: disposeBag)
         
         self.viewModel.statusSubject.subscribe(onNext: { [unowned self] in
             statusView.status = $0
             infoTableView.isHidden = true
         }).disposed(by: disposeBag)
-        
-        self.viewModel.lookupSubject.subscribe(onNext: { [unowned self] in
-            if let model = $0.results?.first {
-                let vc = DetailInfoViewController(model: model)
-                vc.modalPresentationStyle = .pageSheet
-                modalPresentationCapturesStatusBarAppearance = true
-                self.present(vc, animated: true)
-            }
-        }).disposed(by: disposeBag)
-        
+           
         self.resetButton.rx.tap.subscribe(onNext: { [unowned self] in
-            searchBar.text = ""
-            statusView.status = .initial
-            infoTableView.isHidden = true
-            pageNumber = 1
+            self.reset()
         }).disposed(by: disposeBag)
     }
     
@@ -162,17 +157,16 @@ class HomeViewController: UIViewController {
     private func applySnapShot() {
         var snapShot = NSDiffableDataSourceSnapshot<Section, Item>()
         var maxIndex = pageNumber * pageItemLimit
-        snapShot.appendSections([.main])
-        
-        if let count = infoModel?.resultCount,
-           maxIndex > count {
-            maxIndex = count
+        if maxIndex > searchResults.count {
+            maxIndex = searchResults.count
             infoTableView.tableFooterView = noMoreDataLabel
         }
-        if let result = infoModel?.results?.prefix(upTo: maxIndex) {
-            let items = result.map({ return Item.main($0) })
-            snapShot.appendItems(items, toSection: .main)
-        }
+        
+        let result = searchResults.prefix(upTo: maxIndex)
+        let items = result.map({ return Item.main($0) })
+        
+        snapShot.appendSections([.main])
+        snapShot.appendItems(items, toSection: .main)
         tableViewDataSource?.apply(snapShot, animatingDifferences: true) {
             self.pageNumber += 1
             self.infoTableView.isHidden = false
@@ -180,23 +174,31 @@ class HomeViewController: UIViewController {
             self.activityIndicator.stopAnimating()
         }
     }
+    
+    private func reset() {
+        searchBar.text = ""
+        statusView.status = .initial
+        infoTableView.isHidden = true
+        pageNumber = 1
+    }
+    
 }
 
-//  MARK: - TableView Property
+    //  MARK: - TableView Property
 extension HomeViewController {
     private enum Section {
         case main
     }
     private enum Item: Hashable {
-        case main(ItuneStroeModel.Result)
+        case main(ItunesModel.Result)
     }
 }
 
-//  MARK: - TableView Delegate
+    //  MARK: - TableView Delegate
 extension HomeViewController: UITableViewDelegate, UIScrollViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let id = infoModel?.results?[indexPath.row].trackId {
-            viewModel.lookUp(trackId: id)
+        if let id = searchResults[indexPath.row].trackID {
+            viewModel.lookUp(trackID: id)
         }
     }
     
@@ -206,12 +208,12 @@ extension HomeViewController: UITableViewDelegate, UIScrollViewDelegate {
         let tableHeight = scrollView.frame.height
         let distanceToBottom = contentHeight - offset - tableHeight
         
-        if contentHeight > tableHeight && distanceToBottom < 0 &&  !isLoading {
+        if !isLoading && contentHeight > tableHeight && distanceToBottom < 0 {
             isLoading = true
             activityIndicator.startAnimating()
             infoTableView.tableFooterView = activityIndicator
             
-            // simulate the delay of fetching API
+            // simulate the delay of fetching API new items
             DispatchQueue.main.asyncAfter(deadline: .now() + Double.random(in: 0.5 ..< 2)) {
                 self.applySnapShot()
             }
@@ -219,7 +221,7 @@ extension HomeViewController: UITableViewDelegate, UIScrollViewDelegate {
     }
 }
 
-//  MARK: - TextField Delegate
+    //  MARK: - TextField Delegate
 extension HomeViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()

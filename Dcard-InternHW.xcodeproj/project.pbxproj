@@ -20,8 +20,8 @@
 		4C9F673D297C32C200496DEF /* UIFont + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9F673C297C32C200496DEF /* UIFont + Extensions.swift */; };
 		4C9F673F297C346D00496DEF /* Cell + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9F673E297C346D00496DEF /* Cell + Extensions.swift */; };
 		4C9F6741297C355C00496DEF /* View + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9F6740297C355C00496DEF /* View + Extensions.swift */; };
-		4C9F6743297C388200496DEF /* ItuneStoreModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9F6742297C388200496DEF /* ItuneStoreModel.swift */; };
-		4C9F6745297C396E00496DEF /* ItuneStoreViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9F6744297C396E00496DEF /* ItuneStoreViewModel.swift */; };
+		4C9F6743297C388200496DEF /* ItunesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9F6742297C388200496DEF /* ItunesModel.swift */; };
+		4C9F6745297C396E00496DEF /* ItunesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9F6744297C396E00496DEF /* ItunesViewModel.swift */; };
 		4C9F6748297C3EC500496DEF /* InfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9F6747297C3EC500496DEF /* InfoTableViewCell.swift */; };
 		4C9F674E297D3EA800496DEF /* UIViewController + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9F674D297D3EA800496DEF /* UIViewController + Extensions.swift */; };
 		4C9F6750297D432C00496DEF /* SearchStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9F674F297D432C00496DEF /* SearchStatusView.swift */; };
@@ -75,8 +75,8 @@
 		4C9F673C297C32C200496DEF /* UIFont + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont + Extensions.swift"; sourceTree = "<group>"; };
 		4C9F673E297C346D00496DEF /* Cell + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Cell + Extensions.swift"; sourceTree = "<group>"; };
 		4C9F6740297C355C00496DEF /* View + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View + Extensions.swift"; sourceTree = "<group>"; };
-		4C9F6742297C388200496DEF /* ItuneStoreModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItuneStoreModel.swift; sourceTree = "<group>"; };
-		4C9F6744297C396E00496DEF /* ItuneStoreViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItuneStoreViewModel.swift; sourceTree = "<group>"; };
+		4C9F6742297C388200496DEF /* ItunesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItunesModel.swift; sourceTree = "<group>"; };
+		4C9F6744297C396E00496DEF /* ItunesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItunesViewModel.swift; sourceTree = "<group>"; };
 		4C9F6747297C3EC500496DEF /* InfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoTableViewCell.swift; sourceTree = "<group>"; };
 		4C9F674D297D3EA800496DEF /* UIViewController + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController + Extensions.swift"; sourceTree = "<group>"; };
 		4C9F674F297D432C00496DEF /* SearchStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchStatusView.swift; sourceTree = "<group>"; };
@@ -186,7 +186,7 @@
 		4C9F6733297ACD2E00496DEF /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				4C9F6742297C388200496DEF /* ItuneStoreModel.swift */,
+				4C9F6742297C388200496DEF /* ItunesModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -194,7 +194,7 @@
 		4C9F6734297ACD3A00496DEF /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				4C9F6744297C396E00496DEF /* ItuneStoreViewModel.swift */,
+				4C9F6744297C396E00496DEF /* ItunesViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -504,7 +504,7 @@
 				4C9F6741297C355C00496DEF /* View + Extensions.swift in Sources */,
 				4C9F673D297C32C200496DEF /* UIFont + Extensions.swift in Sources */,
 				4CAE35D32991419A00C042E9 /* PreviewViewController.swift in Sources */,
-				4C9F6745297C396E00496DEF /* ItuneStoreViewModel.swift in Sources */,
+				4C9F6745297C396E00496DEF /* ItunesViewModel.swift in Sources */,
 				4CF82602297E83E20041BD32 /* NetworkManager.swift in Sources */,
 				4C9F6748297C3EC500496DEF /* InfoTableViewCell.swift in Sources */,
 				4C9F673A297C319400496DEF /* UIcolor + Extensions.swift in Sources */,
@@ -512,7 +512,7 @@
 				4C8592FE297ABF8D0045E53A /* AppDelegate.swift in Sources */,
 				4C0018FD298699B1009D7CC0 /* DetailInfoView.swift in Sources */,
 				4C9F6750297D432C00496DEF /* SearchStatusView.swift in Sources */,
-				4C9F6743297C388200496DEF /* ItuneStoreModel.swift in Sources */,
+				4C9F6743297C388200496DEF /* ItunesModel.swift in Sources */,
 				4C9F674E297D3EA800496DEF /* UIViewController + Extensions.swift in Sources */,
 				4C9F6736297C2EBA00496DEF /* HomeViewController.swift in Sources */,
 				4C9F673F297C346D00496DEF /* Cell + Extensions.swift in Sources */,

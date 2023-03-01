@@ -56,6 +56,7 @@ class InfoTableViewCell: UITableViewCell {
         imageView.image = UIImage(named: "arrow_right")
         return imageView
     }()
+    
     private let separatorView: UIView = {
         let view = UIView()
         view.backgroundColor = .lightGray
@@ -72,6 +73,7 @@ class InfoTableViewCell: UITableViewCell {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
+    
     private func setupUI() {
         setupInfoStackView()
         contentView.addSubview(frameView)
@@ -122,9 +124,10 @@ class InfoTableViewCell: UITableViewCell {
             }
         }
     }
-    func configure(model: ItuneStroeModel.Result) {
+    
+    func configure(model: ItunesModel.Result) {
         DispatchQueue.main.async {
-            self.collectionImageView.sd_setImage(with: model.artworkUrl100)
+            self.collectionImageView.sd_setImage(with: model.artworkURL100)
             self.infoTitles[Info.artist.rawValue].text = model.artistName
             self.infoTitles[Info.track.rawValue].text = model.trackName
             self.infoTitles[Info.collection.rawValue].text = model.collectionName

@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import RxSwift
+
 class SearchStatusView: UIView {
     var status: Status = .initial {
         didSet {
@@ -25,7 +25,6 @@ class SearchStatusView: UIView {
         label.textAlignment = .center
         label.textColor = .customBlack
         label.font = UIFont.PingFangTC(fontSize: 20, weight: .Semibold)
-        
         return label
     }()
     
@@ -72,12 +71,13 @@ class SearchStatusView: UIView {
         self.statusSubTitleLabel.text = status.property.subtitle
     }
 }
+
 extension SearchStatusView {
    enum Status {
         case initial
         case notFound
         case searching
-        
+       
         var property: (image: UIImage?, title: String, subtitle: String) {
             switch self {
             case .initial:
