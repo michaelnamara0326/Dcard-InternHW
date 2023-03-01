@@ -9,7 +9,7 @@ import Alamofire
 
 enum ItunesRouter {
     case search(term: String)
-    case lookUp(trackId: Int)
+    case lookUp(trackID: Int)
 }
 
 extension ItunesRouter: RouterType {

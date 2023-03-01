@@ -7,10 +7,13 @@
 
 import UIKit
 import AVKit
+import RxSwift
 
 class DetailInfoViewController: UIViewController {
-    private let model: ItuneStroeModel.Result
+    //  MARK: - Init Property
+    private let model: ItunesModel.Result
     private var isPlaying: Bool = false
+    private let disposeBag = DisposeBag()
     
     private let collectionImageView: UIImageView = {
         let imageView = UIImageView()
@@ -45,28 +48,28 @@ class DetailInfoViewController: UIViewController {
     private let playButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "music_play"), for: .normal)
-        button.addTarget(self, action: #selector(playButtonDidTap), for: .touchUpInside)
         return button
     }()
     
     private lazy var musicPlayer: AVPlayer = {
-        guard let url = model.previewUrl else { return AVPlayer() }
+        guard let url = model.previewURL else {
+            self.showAlert(title: "無法播放音樂", message: "請稍後再試")
+            self.playButton.isEnabled = false
+            return AVPlayer()
+        }
         let player = AVPlayer(url: url)
         return player
     }()
 
-    private lazy var artistView = DetailInfoView(main: "歌手", value: model.artistName ?? "-")
-    private lazy var collectionView = DetailInfoView(main: "收錄專輯", value: model.collectionName ?? "-")
-    private lazy var trackView = DetailInfoView(main: "歌曲名稱", value: model.trackName ?? "-", moreButtonHide: true)
-    private lazy var releaseDateView = DetailInfoView(main: "發行日期", value: model.releaseDate?.customDateFormat(to: "yyyy/MM/dd") ?? "-", moreButtonHide: true)
+    private lazy var artistInfoView = DetailInfoView(main: "歌手", content: model.artistName ?? "-")
+    private lazy var collectionInfoView = DetailInfoView(main: "收錄專輯", content: model.collectionName ?? "-")
+    private lazy var trackInfoView = DetailInfoView(main: "歌曲名稱", content: model.trackName ?? "-", moreButtonHide: true)
+    private lazy var releaseDateInfoView = DetailInfoView(main: "發行日期", content: model.releaseDate?.customDateFormat(to: "yyyy/MM/dd") ?? "-", moreButtonHide: true)
     
-    init(model: ItuneStroeModel.Result) {
+    //  MARK: - View Cycle
+    init(model: ItunesModel.Result) {
         self.model = model
         super.init(nibName: nil, bundle: nil)
-    }
-    
-    deinit {
-        NotificationCenter.default.removeObserver(self)
     }
     
     required init?(coder: NSCoder) {
@@ -76,26 +79,29 @@ class DetailInfoViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        setupBinding()
         configure()
-        /// listening when music was end
-        NotificationCenter.default.addObserver(self, selector: #selector(musicPlayerWhenFinish), name: .AVPlayerItemDidPlayToEndTime, object: musicPlayer.currentItem)
+        
         /// avoid when phone on silent mode
         try! AVAudioSession.sharedInstance().setCategory(.playback)
     }
     
+    //  MARK: - Functions
     private func setupUI() {
         view.backgroundColor = .white
-        view.addSubviews([collectionImageView, titleLabel, detailInfoStackView])
-        detailInfoStackView.addArrangeSubviews([artistView, collectionView, trackView,  releaseDateView])
-        collectionImageView.addSubview(fadeView)
-        collectionImageView.insertSubview(playButton, aboveSubview: fadeView)
+        view.addSubviews([collectionImageView, fadeView, playButton, titleLabel, detailInfoStackView])
+        detailInfoStackView.addArrangeSubviews([artistInfoView, collectionInfoView, trackInfoView,  releaseDateInfoView])
         
         collectionImageView.snp.makeConstraints { make in
             make.top.leading.trailing.equalToSuperview()
             make.height.equalTo(375)
         }
         fadeView.snp.makeConstraints { make in
-            make.top.leading.bottom.trailing.equalToSuperview()
+            make.top.leading.bottom.trailing.equalTo(collectionImageView)
+        }
+        playButton.snp.makeConstraints { make in
+            make.center.equalTo(collectionImageView)
+            make.height.width.equalTo(60)
         }
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(collectionImageView.snp.bottom).offset(16)
@@ -107,46 +113,46 @@ class DetailInfoViewController: UIViewController {
             make.trailing.equalToSuperview().offset(-16)
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-8)
         }
-        playButton.snp.makeConstraints { make in
-            make.center.equalToSuperview()
-            make.height.width.equalTo(60)
-        }
-
     }
-    private func configure(){
-        artistView.delegate = self
-        collectionView.delegate = self
-        collectionImageView.sd_setImage(with: model.artworkUrl100)
+    
+    private func setupBinding() {
+        let mergeEvent = Observable.merge(
+            NotificationCenter.default.rx.notification(.AVPlayerItemDidPlayToEndTime).map({_ in "Notification"}),
+            playButton.rx.tap.map({"Button"}))
+        
+        mergeEvent.subscribe(onNext: { [weak self] _ in
+            self?.handleMusicPlayer()
+        }).disposed(by: disposeBag)
     }
-    @objc private func playButtonDidTap(_ sender: UIButton) {
+    
+    private func configure() {
+        artistInfoView.delegate = self
+        collectionInfoView.delegate = self
+        collectionImageView.sd_setImage(with: model.artworkURL100)
+    }
+    
+    private func handleMusicPlayer() {
         if !isPlaying {
             musicPlayer.play()
-            sender.setImage(UIImage(named: "music_pause"), for: .normal)
+            playButton.setImage(UIImage(named: "music_pause"), for: .normal)
         } else {
             musicPlayer.pause()
-            sender.setImage(UIImage(named: "music_play"), for: .normal)
+            playButton.setImage(UIImage(named: "music_play"), for: .normal)
         }
         isPlaying.toggle()
     }
-    @objc private func musicPlayerWhenFinish(_ notification: Notification) {
-        isPlaying = false
-        playButton.setImage(UIImage(named: "music_play"), for: .normal)
-    }
 }
 
+    //  MARK: - Delegate
 extension DetailInfoViewController: moreButtonDelegate {
-    func didTapMoreButton(type: String) {
-        switch type {
-        case "歌手":
-            let vc = PreviewViewController(title: model.artistName, url: model.artistViewUrl)
-            vc.modalPresentationStyle = .overFullScreen
-            present(vc, animated: true)
-        case "收錄專輯":
-            let vc = PreviewViewController(title: model.collectionName, url: model.collectionViewUrl)
-            vc.modalPresentationStyle = .overFullScreen
-            present(vc, animated: true)
-        default:
-            break
+    func didTapMoreButton(title: String) {
+        let url = (title == "歌手") ? model.artistViewURL : model.collectionViewURL
+        let vc = PreviewViewController(title: title, url: url)
+        vc.modalPresentationStyle = .overFullScreen
+        present(vc, animated: true) {
+            if self.isPlaying {
+                self.handleMusicPlayer()
+            }
         }
     }
 }
