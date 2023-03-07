@@ -21,7 +21,7 @@ class HomeViewController: UIViewController {
     private var searchResults = [ItunesResultModel]() {
         didSet {
             let total = searchResults.count / pageItemLimit
-            totalPage = searchResults.count.isMultiple(of: 10) ? total : total + 1
+            totalPage = searchResults.count.isMultiple(of: pageItemLimit) ? total : total + 1
         }
     }
     private var tableViewDataSource: UITableViewDiffableDataSource<Section, Item>?
