@@ -184,10 +184,7 @@ class HomeViewController: UIViewController {
             }
         }).disposed(by: disposeBag)
         
-        viewModel.statusSubject.subscribe(onNext: { [unowned self] in
-            statusView.status = $0
-            infoTableView.isHidden = true
-        }).disposed(by: disposeBag)
+        viewModel.statusSubject.bind(to: statusView.rx.status).disposed(by: disposeBag)
 
         viewModel.isLoading.bind(to: loadingIndicator.rx.isAnimating).disposed(by: disposeBag)
     }
