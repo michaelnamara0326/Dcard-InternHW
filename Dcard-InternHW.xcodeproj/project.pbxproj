@@ -11,7 +11,6 @@
 		4C8592FE297ABF8D0045E53A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8592FD297ABF8D0045E53A /* AppDelegate.swift */; };
 		4C859307297ABF8F0045E53A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4C859306297ABF8F0045E53A /* Assets.xcassets */; };
 		4C85930A297ABF8F0045E53A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C859308297ABF8F0045E53A /* LaunchScreen.storyboard */; };
-		4C859315297ABF900045E53A /* Dcard_InternHWTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C859314297ABF900045E53A /* Dcard_InternHWTests.swift */; };
 		4C85931F297ABF900045E53A /* Dcard_InternHWUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C85931E297ABF900045E53A /* Dcard_InternHWUITests.swift */; };
 		4C859321297ABF900045E53A /* Dcard_InternHWUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C859320297ABF900045E53A /* Dcard_InternHWUITestsLaunchTests.swift */; };
 		4C9DC386298E5113002A3182 /* Date + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9DC385298E5113002A3182 /* Date + Extensions.swift */; };
@@ -26,6 +25,7 @@
 		4C9F674E297D3EA800496DEF /* UIViewController + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9F674D297D3EA800496DEF /* UIViewController + Extensions.swift */; };
 		4C9F6750297D432C00496DEF /* SearchStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9F674F297D432C00496DEF /* SearchStatusView.swift */; };
 		4CA6A9E929B6FAA9004860A2 /* UIApplication + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA6A9E829B6FAA9004860A2 /* UIApplication + Extensions.swift */; };
+		4CA6A9ED29B71F65004860A2 /* ItunesViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA6A9EC29B71F65004860A2 /* ItunesViewModelTests.swift */; };
 		4CAA896C29828F390053317A /* DetailInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAA896B29828F390053317A /* DetailInfoViewController.swift */; };
 		4CAE35D32991419A00C042E9 /* PreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAE35D22991419A00C042E9 /* PreviewViewController.swift */; };
 		4CB0865E29B49E7A0076B675 /* NetworkErrorHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB0865D29B49E7A0076B675 /* NetworkErrorHandling.swift */; };
@@ -67,7 +67,6 @@
 		4C859309297ABF8F0045E53A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4C85930B297ABF8F0045E53A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4C859310297ABF900045E53A /* Dcard-InternHWTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Dcard-InternHWTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		4C859314297ABF900045E53A /* Dcard_InternHWTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dcard_InternHWTests.swift; sourceTree = "<group>"; };
 		4C85931A297ABF900045E53A /* Dcard-InternHWUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Dcard-InternHWUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C85931E297ABF900045E53A /* Dcard_InternHWUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dcard_InternHWUITests.swift; sourceTree = "<group>"; };
 		4C859320297ABF900045E53A /* Dcard_InternHWUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dcard_InternHWUITestsLaunchTests.swift; sourceTree = "<group>"; };
@@ -83,6 +82,7 @@
 		4C9F674D297D3EA800496DEF /* UIViewController + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController + Extensions.swift"; sourceTree = "<group>"; };
 		4C9F674F297D432C00496DEF /* SearchStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchStatusView.swift; sourceTree = "<group>"; };
 		4CA6A9E829B6FAA9004860A2 /* UIApplication + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication + Extensions.swift"; sourceTree = "<group>"; };
+		4CA6A9EC29B71F65004860A2 /* ItunesViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItunesViewModelTests.swift; sourceTree = "<group>"; };
 		4CAA896B29828F390053317A /* DetailInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailInfoViewController.swift; sourceTree = "<group>"; };
 		4CAE35D22991419A00C042E9 /* PreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewViewController.swift; sourceTree = "<group>"; };
 		4CB0865D29B49E7A0076B675 /* NetworkErrorHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkErrorHandling.swift; sourceTree = "<group>"; };
@@ -163,7 +163,7 @@
 		4C859313297ABF900045E53A /* Dcard-InternHWTests */ = {
 			isa = PBXGroup;
 			children = (
-				4C859314297ABF900045E53A /* Dcard_InternHWTests.swift */,
+				4CA6A9EC29B71F65004860A2 /* ItunesViewModelTests.swift */,
 			);
 			path = "Dcard-InternHWTests";
 			sourceTree = "<group>";
@@ -548,7 +548,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4C859315297ABF900045E53A /* Dcard_InternHWTests.swift in Sources */,
+				4CA6A9ED29B71F65004860A2 /* ItunesViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

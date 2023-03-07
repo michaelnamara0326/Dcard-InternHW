@@ -72,12 +72,12 @@ class SearchStatusView: UIView {
     }
 }
 
-enum SearchStatus {
+enum SearchStatus: Equatable{
     case initial
     case notFound
     case searching
     case apiError(message: String)
-   
+    
     var property: (image: UIImage?, title: String, subtitle: String) {
         switch self {
         case .initial:
@@ -99,6 +99,17 @@ enum SearchStatus {
             return (UIImage(named: "search_error"),
                     message,
                     "請稍後再試")
+        }
+    }
+    
+    static func ==(lhs: Self, rhs: Self) -> Bool {
+        switch (lhs, rhs) {
+        case (.initial, .initial), (.notFound, .notFound), (.searching, .searching):
+            return true
+        case (.apiError(let message1), .apiError(let message2)):
+            return message1 == message2
+        default:
+            return false
         }
     }
 }

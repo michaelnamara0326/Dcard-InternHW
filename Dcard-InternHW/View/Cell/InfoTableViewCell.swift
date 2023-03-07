@@ -24,7 +24,7 @@ class InfoTableViewCell: UITableViewCell {
         var imageViews: [UIImageView] = []
         Info.allCases.forEach {
             let icon = UIImageView()
-            icon.image = $0.image
+            icon.image = $0.property.image
             imageViews.append(icon)
         }
         return imageViews
@@ -34,7 +34,7 @@ class InfoTableViewCell: UITableViewCell {
         var labels: [UILabel] = []
         Info.allCases.forEach {
             let label = UILabel()
-            label.font = $0.font
+            label.font = $0.property.font
             label.textColor = .black
             label.textAlignment = .left
             label.numberOfLines = 1
@@ -140,25 +140,19 @@ extension InfoTableViewCell {
         case track
         case collection
         
-        var image: UIImage? {
+        var property: (image: UIImage?, font: UIFont) {
             switch self {
             case .artist:
-                return UIImage(named: "info_artist")
+                return (UIImage(named: "info_artist"),
+                        UIFont.PingFangTC(fontSize: 16, weight: .Semibold))
+                
             case .track:
-                return UIImage(named: "info_track")
+                return (UIImage(named: "info_track"),
+                        UIFont.PingFangTC(fontSize: 14, weight: .Medium))
+                
             case .collection:
-                return UIImage(named: "info_collection")
-            }
-        }
-        
-        var font: UIFont {
-            switch self {
-            case .artist:
-                return UIFont.PingFangTC(fontSize: 16, weight: .Semibold)
-            case .track:
-                return UIFont.PingFangTC(fontSize: 14, weight: .Medium)
-            case .collection:
-                return UIFont.PingFangTC(fontSize: 14, weight: .Regular)
+                return (UIImage(named: "info_collection"),
+                        UIFont.PingFangTC(fontSize: 14, weight: .Regular))
             }
         }
     }
