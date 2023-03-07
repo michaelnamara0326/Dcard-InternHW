@@ -25,8 +25,10 @@
 		4C9F6748297C3EC500496DEF /* InfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9F6747297C3EC500496DEF /* InfoTableViewCell.swift */; };
 		4C9F674E297D3EA800496DEF /* UIViewController + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9F674D297D3EA800496DEF /* UIViewController + Extensions.swift */; };
 		4C9F6750297D432C00496DEF /* SearchStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9F674F297D432C00496DEF /* SearchStatusView.swift */; };
+		4CA6A9E929B6FAA9004860A2 /* UIApplication + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA6A9E829B6FAA9004860A2 /* UIApplication + Extensions.swift */; };
 		4CAA896C29828F390053317A /* DetailInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAA896B29828F390053317A /* DetailInfoViewController.swift */; };
 		4CAE35D32991419A00C042E9 /* PreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAE35D22991419A00C042E9 /* PreviewViewController.swift */; };
+		4CB0865E29B49E7A0076B675 /* NetworkErrorHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB0865D29B49E7A0076B675 /* NetworkErrorHandling.swift */; };
 		4CF82602297E83E20041BD32 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF82601297E83E20041BD32 /* NetworkManager.swift */; };
 		4CF82604297E84050041BD32 /* ItunesRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF82603297E84050041BD32 /* ItunesRouter.swift */; };
 		928B076A01E5155E5C1B7A6B /* Pods_Dcard_InternHWTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A5F08C29DC9835EB88B9E18 /* Pods_Dcard_InternHWTests.framework */; };
@@ -80,8 +82,10 @@
 		4C9F6747297C3EC500496DEF /* InfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoTableViewCell.swift; sourceTree = "<group>"; };
 		4C9F674D297D3EA800496DEF /* UIViewController + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController + Extensions.swift"; sourceTree = "<group>"; };
 		4C9F674F297D432C00496DEF /* SearchStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchStatusView.swift; sourceTree = "<group>"; };
+		4CA6A9E829B6FAA9004860A2 /* UIApplication + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication + Extensions.swift"; sourceTree = "<group>"; };
 		4CAA896B29828F390053317A /* DetailInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailInfoViewController.swift; sourceTree = "<group>"; };
 		4CAE35D22991419A00C042E9 /* PreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewViewController.swift; sourceTree = "<group>"; };
+		4CB0865D29B49E7A0076B675 /* NetworkErrorHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkErrorHandling.swift; sourceTree = "<group>"; };
 		4CF82601297E83E20041BD32 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		4CF82603297E84050041BD32 /* ItunesRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItunesRouter.swift; sourceTree = "<group>"; };
 		643799AA19B9093EA31B61B1 /* Pods-Dcard-InternHW.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dcard-InternHW.release.xcconfig"; path = "Target Support Files/Pods-Dcard-InternHW/Pods-Dcard-InternHW.release.xcconfig"; sourceTree = "<group>"; };
@@ -147,8 +151,9 @@
 				4C859308297ABF8F0045E53A /* LaunchScreen.storyboard */,
 				4C8592FD297ABF8D0045E53A /* AppDelegate.swift */,
 				4C9F674C297D36A000496DEF /* Network */,
-				4C9F6734297ACD3A00496DEF /* ViewModel */,
+				4CCCD67F29B49B3C00471DAC /* Router */,
 				4C9F6733297ACD2E00496DEF /* Model */,
+				4C9F6734297ACD3A00496DEF /* ViewModel */,
 				4C9F6732297ACD1400496DEF /* View */,
 				4C9F673B297C319900496DEF /* Extensions */,
 			);
@@ -208,6 +213,7 @@
 				4C9F6740297C355C00496DEF /* View + Extensions.swift */,
 				4C9F674D297D3EA800496DEF /* UIViewController + Extensions.swift */,
 				4C9DC385298E5113002A3182 /* Date + Extensions.swift */,
+				4CA6A9E829B6FAA9004860A2 /* UIApplication + Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -234,9 +240,25 @@
 			isa = PBXGroup;
 			children = (
 				4CF82601297E83E20041BD32 /* NetworkManager.swift */,
-				4CF82603297E84050041BD32 /* ItunesRouter.swift */,
+				4CB0866029B504A60076B675 /* ErrorHandling */,
 			);
 			path = Network;
+			sourceTree = "<group>";
+		};
+		4CB0866029B504A60076B675 /* ErrorHandling */ = {
+			isa = PBXGroup;
+			children = (
+				4CB0865D29B49E7A0076B675 /* NetworkErrorHandling.swift */,
+			);
+			path = ErrorHandling;
+			sourceTree = "<group>";
+		};
+		4CCCD67F29B49B3C00471DAC /* Router */ = {
+			isa = PBXGroup;
+			children = (
+				4CF82603297E84050041BD32 /* ItunesRouter.swift */,
+			);
+			path = Router;
 			sourceTree = "<group>";
 		};
 		F38439CE8DE8B005DFDAACC1 /* Pods */ = {
@@ -512,7 +534,9 @@
 				4C8592FE297ABF8D0045E53A /* AppDelegate.swift in Sources */,
 				4C0018FD298699B1009D7CC0 /* DetailInfoView.swift in Sources */,
 				4C9F6750297D432C00496DEF /* SearchStatusView.swift in Sources */,
+				4CB0865E29B49E7A0076B675 /* NetworkErrorHandling.swift in Sources */,
 				4C9F6743297C388200496DEF /* ItunesModel.swift in Sources */,
+				4CA6A9E929B6FAA9004860A2 /* UIApplication + Extensions.swift in Sources */,
 				4C9F674E297D3EA800496DEF /* UIViewController + Extensions.swift in Sources */,
 				4C9F6736297C2EBA00496DEF /* HomeViewController.swift in Sources */,
 				4C9F673F297C346D00496DEF /* Cell + Extensions.swift in Sources */,
@@ -693,7 +717,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
-				INFOPLIST_KEY_UIRequiresFullScreen = NO;
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
@@ -727,7 +751,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
-				INFOPLIST_KEY_UIRequiresFullScreen = NO;
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;

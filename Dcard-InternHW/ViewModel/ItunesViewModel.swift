@@ -7,37 +7,61 @@
 
 import RxSwift
 import RxCocoa
-import Alamofire
+
 class ItunesViewModel {
-    let searchSubject = PublishSubject<[ItunesModel.Result]>()
-    let lookupSubject = PublishSubject<ItunesModel.Result>()
-    let statusSubject = PublishSubject<SearchStatusView.Status>()
+    // MARK: - Observer Property
+    let searchSubject = PublishSubject<[ItunesResultModel]>()
+    let lookupSubject = PublishSubject<ItunesResultModel?>()
+    let statusSubject = PublishSubject<SearchStatus>()
+    let isLoading = PublishSubject<Bool>()
+    
+    // MARK: - ViewModel Functions
+    let service = NetworkManager<ItunesRouter>()
+    typealias ItunesCompletion<T: Codable> = (ItunesResponseModel<T>?, NetworkError?) -> Void
     
     func search(term: String) {
-        let completion: (ItunesModel?, String, Error?, Bool) -> Void = { [weak self] data, msg, error, success in
-            if success,
-               let data = data?.results {
-                data.isEmpty ? self?.statusSubject.onNext(.notFound) : self?.searchSubject.onNext(data)
+        let completion: ItunesCompletion<ItunesResultModel> = { [weak self] data, error in
+            guard let self = self else { return }
+            if let data = data {
+                if data.results.isEmpty {
+                    self.statusSubject.onNext(.notFound)
+                } else {
+                    let sortResults = self.sortResults(data.results)
+                    self.searchSubject.onNext(sortResults)
+                }
             } else {
-                print(error ?? "fetch music info error")
-                // statusSubject.onNext(.error(msg: "fetching error"))
+                let message = NetworkErrorHandling.handleError(error!)
+                self.statusSubject.onNext(.apiError(message: message))
             }
         }
         self.statusSubject.onNext(.searching)
-        let service = NetworkManager<ItunesRouter>()
         service.requestData(.search(term: term), completion: completion)
     }
     
     func lookUp(trackID: Int) {
-        let completion: (ItunesModel?, String, Error?, Bool) -> Void = { [weak self] data, msg, error, success in
-            if success,
-               let data = data?.results?.first {
-                self?.lookupSubject.onNext(data)
+        let completion: ItunesCompletion<ItunesResultModel> = { [weak self] data, error in
+            guard let self = self else { return }
+            self.isLoading.onNext(false)
+            if let data = data {
+                self.lookupSubject.onNext(data.results.first ?? nil)
             } else {
-               print(error ?? "fetch error")
+                // show error alert
+                let vc = UIApplication.getTopViewController()
+                let title = NetworkErrorHandling.handleError(error!)
+                vc?.showAlert(title: title, message: "請稍後再試")
             }
         }
-        let service = NetworkManager<ItunesRouter>()
+        isLoading.onNext(true)
         service.requestData(.lookUp(trackID: trackID), completion: completion)
+    }
+    
+    private func sortResults(_ results: [ItunesResultModel]) -> [ItunesResultModel] {
+        return results.sorted {
+            if $0.artistName == $1.artistName {
+                return ($0.collectionName ?? "") > ($1.collectionName ?? "")
+            } else {
+                return ($0.artistName ?? "") > ($1.artistName ?? "")
+            }
+        }
     }
 }

@@ -8,7 +8,7 @@
 import UIKit
 
 class SearchStatusView: UIView {
-    var status: Status = .initial {
+    var status: SearchStatus = .initial {
         didSet {
             configure()
         }
@@ -72,29 +72,33 @@ class SearchStatusView: UIView {
     }
 }
 
-extension SearchStatusView {
-   enum Status {
-        case initial
-        case notFound
-        case searching
-       
-        var property: (image: UIImage?, title: String, subtitle: String) {
-            switch self {
-            case .initial:
-                return (UIImage(named: "search_init"),
-                        "結果將顯示於此",
-                        "請於上方搜尋列尋找您喜愛的藝人、歌曲")
-                
-            case .notFound:
-                return (UIImage(named: "search_notFound"),
-                        "查無結果",
-                        "哎呀，請再重新輸入一次關鍵字")
-                
-            case .searching:
-                return (UIImage(named: "search_searching"),
-                        "搜尋中...",
-                        "請稍候")
-            }
+enum SearchStatus {
+    case initial
+    case notFound
+    case searching
+    case apiError(message: String)
+   
+    var property: (image: UIImage?, title: String, subtitle: String) {
+        switch self {
+        case .initial:
+            return (UIImage(named: "search_init"),
+                    "查詢結果將顯示於此",
+                    "請於上方搜尋列尋找您喜愛的藝人、歌曲")
+            
+        case .notFound:
+            return (UIImage(named: "search_notFound"),
+                    "查無結果",
+                    "哎呀，請再重新查詢關鍵字")
+            
+        case .searching:
+            return (UIImage(named: "search_searching"),
+                    "搜尋中...",
+                    "請耐心等候")
+            
+        case .apiError(let message):
+            return (UIImage(named: "search_error"),
+                    message,
+                    "請稍後再試")
         }
     }
 }

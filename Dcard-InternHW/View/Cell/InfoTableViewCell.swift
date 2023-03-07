@@ -125,12 +125,12 @@ class InfoTableViewCell: UITableViewCell {
         }
     }
     
-    func configure(model: ItunesModel.Result) {
+    func configure(model: ItunesResultModel) {
         DispatchQueue.main.async {
-            self.collectionImageView.sd_setImage(with: model.artworkURL100)
-            self.infoTitles[Info.artist.rawValue].text = model.artistName
-            self.infoTitles[Info.track.rawValue].text = model.trackName
-            self.infoTitles[Info.collection.rawValue].text = model.collectionName
+            self.collectionImageView.sd_setImage(with: model.artworkURL100, placeholderImage: UIImage(named: "defaultImage_icon"))
+            self.infoTitles[Info.artist.rawValue].text = model.artistName ?? "-"
+            self.infoTitles[Info.track.rawValue].text = model.trackName ?? "-"
+            self.infoTitles[Info.collection.rawValue].text = model.collectionName ?? "-"
         }
     }
 }
