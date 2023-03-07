@@ -11,10 +11,11 @@ import RxSwift
 
 class DetailInfoViewController: UIViewController {
     //  MARK: - Init Property
-    private let model: ItunesModel.Result
-    private var isPlaying: Bool = false
+    private let model: ItunesResultModel
     private let disposeBag = DisposeBag()
+    private var isPlaying: Bool = false
     
+    //  MARK: - View Property
     private let collectionImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.isUserInteractionEnabled = true
@@ -67,7 +68,7 @@ class DetailInfoViewController: UIViewController {
     private lazy var releaseDateInfoView = DetailInfoView(main: "發行日期", content: model.releaseDate?.customDateFormat(to: "yyyy/MM/dd") ?? "-", moreButtonHide: true)
     
     //  MARK: - View Cycle
-    init(model: ItunesModel.Result) {
+    init(model: ItunesResultModel) {
         self.model = model
         super.init(nibName: nil, bundle: nil)
     }
@@ -82,7 +83,7 @@ class DetailInfoViewController: UIViewController {
         setupBinding()
         configure()
         
-        /// avoid when phone on silent mode
+        // avoid when phone on silent mode
         try! AVAudioSession.sharedInstance().setCategory(.playback)
     }
     
@@ -117,7 +118,7 @@ class DetailInfoViewController: UIViewController {
     
     private func setupBinding() {
         let mergeEvent = Observable.merge(
-            NotificationCenter.default.rx.notification(.AVPlayerItemDidPlayToEndTime).map({_ in "Notification"}),
+            NotificationCenter.default.rx.notification(.AVPlayerItemDidPlayToEndTime).map({ _ in "Notification"}),
             playButton.rx.tap.map({"Button"}))
         
         mergeEvent.subscribe(onNext: { [weak self] _ in
@@ -149,10 +150,9 @@ extension DetailInfoViewController: moreButtonDelegate {
         let url = (title == "歌手") ? model.artistViewURL : model.collectionViewURL
         let vc = PreviewViewController(title: title, url: url)
         vc.modalPresentationStyle = .overFullScreen
-        present(vc, animated: true) {
-            if self.isPlaying {
-                self.handleMusicPlayer()
-            }
+        present(vc, animated: true)
+        if isPlaying {
+            handleMusicPlayer()
         }
     }
 }

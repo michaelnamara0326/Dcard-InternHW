@@ -41,6 +41,7 @@ extension ItunesRouter: RouterType {
                 [
                     "term": term,
                     "country": "tw",
+                    "entity": "song",
                     "media": "music"
                 ]
             
