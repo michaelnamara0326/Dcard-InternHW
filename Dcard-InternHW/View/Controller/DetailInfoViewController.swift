@@ -95,7 +95,7 @@ class DetailInfoViewController: UIViewController {
         
         collectionImageView.snp.makeConstraints { make in
             make.top.leading.trailing.equalToSuperview()
-            make.height.equalTo(view.frame.height / 2)
+            make.height.equalTo(view.frame.height / 2 - 30)
         }
         fadeView.snp.makeConstraints { make in
             make.top.leading.bottom.trailing.equalTo(collectionImageView)
