@@ -2,6 +2,30 @@
 
 應徵者： 沈柏帆 (Po-Fan, Shen)
 
+## 基本資訊 Information
+- 安裝
+ 
+```
+git clone https://github.com/qazwsx19263/Dcard-InternHW.git
+pod install
+open xcworkspace
+```
+ 
+- 規格  
+  |   | 開發環境 |
+  |  :--- | ---: |
+  | iOS   | 15.0 |
+  | Xcode | 14.1 |
+  | Swift |  5   |
+ 
+- 套件版本
+  | 名稱 | 版本 | 使用原因 |
+  | :--- | ---: | ---: |
+  | [RxSwift]   | 6.5.0  | 資料綁定、RxCocoa封裝UI元件 |
+  | [SDWebImage]| 5.15.0 | Download & Caching URL Image |
+  | [Alamofire] | 5.6.4  | 網路層實作 |
+  | [SnapKit]   | 5.6.0  | 便捷Auto Layout語法 |
+   
 ## 介面設計 UI Design
 
 [Figma](https://www.figma.com/file/0aXmmicKHDjFZt64oTpkl9/Dcard?t=p2b6qgsm86myXi3M-1)
@@ -20,13 +44,8 @@
 
 - MVVM
 
-## 套件 Library
 
-- [RxSwift] - MVVM資料綁定、RxCocoa封裝元件使用。
-- [SDWebImage] - Download、Caching網路URL Image。
-- [Alamofire] - 網路層應用。
-- [SnapKit] - 便捷Auto Layout語法。
-
+ 
 ## 功能需求 Features
 
 - 列表功能
@@ -158,7 +177,7 @@ class NetworkErrorHandling {
 }
 ```
 ## 測試 Testing
-- ViewModel 簡易測試
+- 簡易ViewModel測試
   - search(valid / invalid)
   ```swift
     func testSearchWithValidTerm() {
