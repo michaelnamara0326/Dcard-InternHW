@@ -72,7 +72,7 @@
     }
   ```
 - [x] 分頁機制
-  - 透過searchResults的`Property Observers`，每當使用者搜尋新關鍵字時，計算回傳結果所需總頁數，目前設定為一頁10筆資料，以及API預設最大回傳上限50筆，亦即目前資料應當不超過五頁。
+  - 透過searchResults的`didSet`Observer，每當使用者搜尋新關鍵字時，計算回傳結果所需總頁數，目前設定為一頁10筆資料，以及API預設最大回傳上限50筆，亦即目前資料應當不超過五頁。
   ```swift
     private var totalPage = 1
     private var currentPage = 1
