@@ -31,7 +31,7 @@
 
 - 列表功能
 - [x] 呈現結果於列表
-  - 使用UITableview呈現，資料來源透過[UITableViewDiffableSource](https://developer.apple.com/documentation/uikit/uitableviewdiffabledatasource)實作，保留擴充性及維護性，資料已進行歌手名,專輯名排序。
+  - 使用UITableview呈現，資料來源透過[UITableViewDiffableSource](https://developer.apple.com/documentation/uikit/uitableviewdiffabledatasource)實作，保留擴充性及維護性，資料已在viewmodel內進行歌手名,專輯名排序。
   ```swift
     private enum Section {
         case main
@@ -72,7 +72,7 @@
     }
   ```
 - [x] 分頁機制
-  - 透過searchResults的`Property Observers`，每當使用者搜尋新關鍵字時，計算資料所需頁數，目前設定為一頁10筆資料，以及API預設最大回傳上限50筆，亦即目前資料應當不超過五頁。
+  - 透過searchResults的`Property Observers`，每當使用者搜尋新關鍵字時，計算回傳結果所需總頁數，目前設定為一頁10筆資料，以及API預設最大回傳上限50筆，亦即目前資料應當不超過五頁。
   ```swift
     private var totalPage = 1
     private var currentPage = 1
@@ -84,7 +84,7 @@
         }
     }
   ```  
-  - 以`是否正撈取` 、 `當前頁數是否已達總頁數`、`資料內容總長度是否大於顯示長度` 、 `是否已達tableview底部` 防止使用者重複撈取及判斷載入新分頁之條件式，此外因Itunes API無做分頁機制，不需重新打API撈資料，在此delay時間執行僅為模擬倘若是有做分頁的API。
+  - 以`是否正撈取` 、 `當前頁數是否已達總頁數`、`資料內容總長度是否大於顯示長度` 、 `是否已達tableview底部` 等機制防止使用者重複撈取及判斷載入新分頁之條件式，此外因Itunes API無做分頁機制，不需重新打API撈資料，在此delay時間執行僅為模擬倘若是有做分頁的API。
   ```swift
   func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         let offset = infoTableView.contentOffset.y
@@ -110,7 +110,7 @@
 - [x] 返回列表功能
 - 預覽頁
 - [x] 載入網址
-  - 客製內頁，包含關閉及重整按鈕，使用WKWebView載入網站內容讓使用者操作，開啟左右返回手勢。
+  - 客製頁面，包含關閉及重整按鈕，內嵌WKWebView載入網站內容讓使用者操作，並開啟左右返回手勢。
 - [x] 返回詳細頁面
 
 ## 網路層及例外處理 Networking & Error Handling
