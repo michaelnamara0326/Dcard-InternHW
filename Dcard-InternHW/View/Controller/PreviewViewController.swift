@@ -82,22 +82,21 @@ class PreviewViewController: UIViewController {
         
         navigationView.snp.makeConstraints { make in
             make.top.leading.trailing.equalToSuperview()
-            make.height.equalTo(120)
+            make.bottom.equalTo(closeButton).offset(16)
         }
         closeButton.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(16)
             make.leading.equalToSuperview().offset(22)
-            make.bottom.equalToSuperview().offset(-12)
             make.height.width.equalTo(24)
         }
         reloadButton.snp.makeConstraints { make in
+            make.top.equalTo(closeButton)
             make.trailing.equalToSuperview().offset(-22)
-            make.bottom.equalToSuperview().offset(-12)
             make.height.width.equalTo(24)
         }
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(closeButton)
             make.width.equalTo(250)
-            make.bottom.equalToSuperview().offset(-12)
             make.centerX.equalToSuperview()
         }
         webView.snp.makeConstraints { make in

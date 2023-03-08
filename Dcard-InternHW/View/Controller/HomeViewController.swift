@@ -122,7 +122,7 @@ class HomeViewController: UIViewController {
         navigationView.snp.makeConstraints { make in
             make.top.equalTo(view)
             make.leading.trailing.equalToSuperview()
-            make.height.equalTo(120)
+            make.bottom.equalTo(searchBar).offset(16)
         }
         searchBar.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(16)
