@@ -17,6 +17,7 @@ open xcworkspace
   | iOS   | 15.0 |
   | Xcode | 14.1 |
   | Swift |  5   |
+  | Simulator |  有瀏海機型   |
  
 - 套件版本
   | 名稱 | 版本 | 使用原因 |
