@@ -11,8 +11,8 @@ pod install
 open xcworkspace
 ```
  
-- 規格  
-  |   | 開發環境 |
+- 開發環境  
+  | 名稱  | 版本 |
   |  :--- | ---: |
   | iOS   | 15.0 |
   | Xcode | 14.1 |
@@ -24,8 +24,10 @@ open xcworkspace
   | [RxSwift]   | 6.5.0  | 資料綁定、RxCocoa封裝UI元件 |
   | [SDWebImage]| 5.15.0 | Download & Caching URL Image |
   | [Alamofire] | 5.6.4  | 網路層實作 |
-  | [SnapKit]   | 5.6.0  | 便捷Auto Layout語法 |
-   
+  | [SnapKit]   | 5.6.0  | 便捷Auto Layout語法 |  
+  
+- API 文件  
+  https://performance-partners.apple.com/search-api
 ## 介面設計 UI Design
 
 [Figma](https://www.figma.com/file/0aXmmicKHDjFZt64oTpkl9/Dcard?t=p2b6qgsm86myXi3M-1)
