@@ -1,7 +1,5 @@
 # 2023 Dcard iOS Intern Homework
 
-應徵者： 沈柏帆 (Po-Fan, Shen)
-
 ## 基本資訊 Information
 - 安裝
  
@@ -46,7 +44,6 @@ open xcworkspace
 ## 程式架構 Design Pattern
 
 - MVVM
-
 
  
 ## 功能需求 Features
