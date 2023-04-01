@@ -15,7 +15,6 @@ open xcworkspace
   | iOS   | 15.0 |
   | Xcode | 14.1 |
   | Swift |  5   |
-  | Simulator |  有瀏海機型   |
  
 - 套件版本
   | 名稱 | 版本 | 使用原因 |
@@ -50,69 +49,69 @@ open xcworkspace
 
 - 列表功能
 - [x] 呈現結果於列表
-  - 使用UITableview呈現，資料來源透過[UITableViewDiffableSource](https://developer.apple.com/documentation/uikit/uitableviewdiffabledatasource)實作，保留擴充性及維護性，資料已在viewmodel內進行歌手名,專輯名排序。
+  - 使用UITableview呈現，資料來源透過[UITableViewDiffableSource](https://developer.apple.com/documentation/uikit/uitableviewdiffabledatasource)實作，保留擴充性及維護性，資料已在viewModel內進行歌手名,專輯名排序。
   ```swift
     private enum Section {
         case main
     }
+    
     private enum Item: Hashable {
-        case main(ItunesResultModel)
+        case main(ItunesSearchResultModel)
     }
-  ```
-  ```swift
+    
     private func configureDataSource() {
-          self.tableViewDataSource = UITableViewDiffableDataSource(tableView: infoTableView, cellProvider: { tableView, indexPath, itemIdentifier in
-              switch itemIdentifier {
-              case .main(let model):
-                  let cell = tableView.dequeueReusableCell(withIdentifier: InfoTableViewCell.cellIdentifier) as! InfoTableViewCell
-                  cell.configure(model: model)
-                  return cell
-              }
-          })
-     }
+        self.tableViewDataSource = UITableViewDiffableDataSource(tableView: infoTableView, cellProvider: { tableView, indexPath, itemIdentifier in
+            switch itemIdentifier {
+            case .main(let model):
+                let cell = tableView.dequeueReusableCell(withIdentifier: InfoTableViewCell.cellIdentifier) as! InfoTableViewCell
+                cell.configure(model: model)
+                return cell
+            }
+        })
+    }
     
     private func applySnapShot() {
         var maxIndex = currentPage * pageItemLimit
         if maxIndex >= searchResults.count {
             maxIndex = searchResults.count
-            infoTableView.tableFooterView = noMoreDataLabel
+            noMoreDataLabel.isHidden = false
         }
         
-        var snapShot = NSDiffableDataSourceSnapshot<Section, Item>() 
+        var snapShot = NSDiffableDataSourceSnapshot<Section, Item>()
         let items = searchResults.prefix(upTo: maxIndex).map({ Item.main($0) })
         snapShot.appendSections([.main])
         snapShot.appendItems(items, toSection: .main)
         tableViewDataSource?.apply(snapShot, animatingDifferences: true) {
-            self.currentPage += 1
+            self.isLoadingPage = false
             self.infoTableView.isHidden = false
-            self.isLoading = false
             self.paginationIndicator.stopAnimating()
         }
     }
   ```
 - [x] 分頁機制
-  - 透過searchResults的`didSet`Observer，每當使用者搜尋新關鍵字時，計算回傳結果所需總頁數，目前設定為一頁10筆資料，以及API預設最大回傳上限50筆，亦即目前資料應當不超過五頁。
+  - 透過searchResults的`didSet`Observer，每當使用者搜尋新關鍵字時，計算回傳結果所需總頁數，目前設定為一頁10筆資料，為方便展示分頁機制僅預設最大回傳上限50筆。
   ```swift
     private var totalPage = 1
     private var currentPage = 1
     private let pageItemLimit = 10
-    private var searchResults = [ItunesResultModel]() {
+    private var searchResults = [ItunesSearchResultModel]() {
         didSet {
             let total = searchResults.count / pageItemLimit
             totalPage = searchResults.count.isMultiple(of: pageItemLimit) ? total : total + 1
         }
     }
   ```  
-  - 以`是否正撈取` 、 `當前頁數是否已達總頁數`、`資料內容總長度是否大於顯示長度` 、 `是否已達tableview底部` 等機制防止使用者重複撈取及判斷載入新分頁之條件式，此外因Itunes API無做分頁機制，不需重新打API撈資料，在此delay時間執行僅為模擬倘若是有做分頁的API。
+  - 以`是否正撈取` 、 `當前頁數是否已達總頁數`、`資料內容總長度是否大於顯示長度` 、 `是否已達tableview底部` 等機制防止使用者重複撈取及判斷載入新分頁之條件式，並在此模擬API之下一頁資料撈取時間。
   ```swift
-  func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+  func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let offset = infoTableView.contentOffset.y
         let contentHeight = infoTableView.contentSize.height
         let tableHeight = infoTableView.frame.height
         let distanceToBottom = contentHeight - offset - tableHeight
         
-        if !isLoading && currentPage <= totalPage && contentHeight > tableHeight && distanceToBottom < 0 {
-            isLoading = true
+        if !isLoadingPage && currentPage < totalPage && contentHeight > tableHeight && distanceToBottom < 0 {
+            currentPage += 1
+            isLoadingPage = true
             paginationIndicator.startAnimating()
             
             DispatchQueue.main.asyncAfter(deadline: .now() + Double.random(in: 0.5 ..< 1.5)) { /// simulate the delay of fetching API
@@ -149,31 +148,11 @@ protocol RouterType {
 enum NetworkError: Error {
     case invalidURL
     case disconnectInternet
+    case clientError(Int)
+    case serverError(Int)
     case decodingFailed(Error)
     case requestFailed(Error)
-    case serverError(Int)
-    case defaultError
-}
-
-class NetworkErrorHandling {
-    static func handleError(_ error: NetworkError) -> String {
-        switch error {
-        case .invalidURL:
-            return "網址錯誤"
-        case .disconnectInternet:
-            return "無網際網路連線"
-        case .requestFailed(let error):
-            debugPrint(error)
-            return "資料請求失敗"
-        case .decodingFailed(let error):
-            debugPrint(error)
-            return "資料解碼失敗"
-        case .serverError(let code):
-            return "伺服器錯誤： \(code)"
-        case .defaultError:
-            return "未知錯誤"
-        }
-    }
+    case defaultError(Error)
 }
 ```
 ## 測試 Testing
