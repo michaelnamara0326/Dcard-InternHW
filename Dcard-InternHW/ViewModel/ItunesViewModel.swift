@@ -6,7 +6,6 @@
 //
 
 import RxSwift
-import RxCocoa
 
 class ItunesViewModel {
     // MARK: - Observer Property
