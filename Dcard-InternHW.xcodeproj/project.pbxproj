@@ -215,18 +215,18 @@
 			children = (
 				4CC2928929D4345500ED4386 /* RouterType.swift */,
 				4CF82601297E83E20041BD32 /* NetworkManager.swift */,
-				4CB0866029B504A60076B675 /* NetworkErrorHandling */,
+				4CB0866029B504A60076B675 /* NetworkError */,
 			);
 			path = Network;
 			sourceTree = "<group>";
 		};
-		4CB0866029B504A60076B675 /* NetworkErrorHandling */ = {
+		4CB0866029B504A60076B675 /* NetworkError */ = {
 			isa = PBXGroup;
 			children = (
 				4C53187C29D84227007C0AB0 /* NetworkError.swift */,
 				4CB0865D29B49E7A0076B675 /* NetworkErrorHandling.swift */,
 			);
-			path = NetworkErrorHandling;
+			path = NetworkError;
 			sourceTree = "<group>";
 		};
 		4CC2928829D2C2AA00ED4386 /* CustomView */ = {
