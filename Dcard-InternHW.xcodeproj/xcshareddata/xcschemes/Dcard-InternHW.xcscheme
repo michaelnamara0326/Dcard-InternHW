@@ -39,17 +39,6 @@
                ReferencedContainer = "container:Dcard-InternHW.xcodeproj">
             </BuildableReference>
          </TestableReference>
-         <TestableReference
-            skipped = "YES"
-            parallelizable = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "4C859319297ABF900045E53A"
-               BuildableName = "Dcard-InternHWUITests.xctest"
-               BlueprintName = "Dcard-InternHWUITests"
-               ReferencedContainer = "container:Dcard-InternHW.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

@@ -11,7 +11,7 @@ import RxSwift
 
 class DetailInfoViewController: UIViewController {
     //  MARK: - Init Property
-    private let model: ItunesResultModel
+    private let model: ItunesLookUpResultModel
     private let disposeBag = DisposeBag()
     private var isPlaying: Bool = false
     
@@ -33,10 +33,31 @@ class DetailInfoViewController: UIViewController {
         let label = UILabel()
         label.text = "詳細資訊"
         label.textColor = .customBlack
-        label.font = UIFont.PingFangTC(fontSize: 18, weight: .Semibold)
+        label.font = UIFont.PingFangTC(fontSize: 18, weight: .semibold)
         return label
     }()
     
+    private lazy var detailInfoViews: [DetailInfoView] = {
+        var views = [DetailInfoView]()
+        DetailInfoType.allCases.forEach {
+            var content = ""
+            switch $0 {
+            case .artist:
+                content = model.artistName ?? "-"
+            case .collection:
+                content = model.collectionName ?? "-"
+            case .track:
+                content = model.trackName ?? "-"
+            case .releaseDate:
+                content = model.releaseDate?.customDateFormat(to: "yyyy/MM/dd") ?? "-"
+            }
+            let view = DetailInfoView(title: $0.property.title, content: content, moreButtonHide: $0.property.moreButtonHide)
+            view.delegate = self
+            views.append(view)
+        }
+        return views
+    }()
+
     private let detailInfoStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
@@ -61,14 +82,9 @@ class DetailInfoViewController: UIViewController {
         let player = AVPlayer(url: url)
         return player
     }()
-
-    private lazy var artistInfoView = DetailInfoView(main: "歌手", content: model.artistName ?? "-")
-    private lazy var collectionInfoView = DetailInfoView(main: "收錄專輯", content: model.collectionName ?? "-")
-    private lazy var trackInfoView = DetailInfoView(main: "歌曲名稱", content: model.trackName ?? "-", moreButtonHide: true)
-    private lazy var releaseDateInfoView = DetailInfoView(main: "發行日期", content: model.releaseDate?.customDateFormat(to: "yyyy/MM/dd") ?? "-", moreButtonHide: true)
     
     //  MARK: - View Cycle
-    init(model: ItunesResultModel) {
+    init(model: ItunesLookUpResultModel) {
         self.model = model
         super.init(nibName: nil, bundle: nil)
     }
@@ -83,15 +99,14 @@ class DetailInfoViewController: UIViewController {
         setupBinding()
         configure()
         
-        // avoid when phone on silent mode
-        try! AVAudioSession.sharedInstance().setCategory(.playback)
+        try! AVAudioSession.sharedInstance().setCategory(.playback) // avoid when phone on silent mode
     }
     
     //  MARK: - Functions
     private func setupUI() {
         view.backgroundColor = .white
         view.addSubviews([collectionImageView, fadeView, playButton, titleLabel, detailInfoStackView])
-        detailInfoStackView.addArrangeSubviews([artistInfoView, collectionInfoView, trackInfoView,  releaseDateInfoView])
+        detailInfoStackView.addArrangeSubviews(detailInfoViews)
         
         collectionImageView.snp.makeConstraints { make in
             make.top.leading.trailing.equalToSuperview()
@@ -127,8 +142,6 @@ class DetailInfoViewController: UIViewController {
     }
     
     private func configure() {
-        artistInfoView.delegate = self
-        collectionInfoView.delegate = self
         collectionImageView.sd_setImage(with: model.artworkURL100)
     }
     
@@ -145,9 +158,29 @@ class DetailInfoViewController: UIViewController {
 }
 
     //  MARK: - Delegate
-extension DetailInfoViewController: moreButtonDelegate {
+extension DetailInfoViewController: MoreButtonDelegate {
+    enum DetailInfoType: CaseIterable {
+        case artist
+        case collection
+        case track
+        case releaseDate
+        
+        var property: (title: String, moreButtonHide: Bool) {
+            switch self {
+            case .artist:
+                return ("歌手", false)
+            case .collection:
+                return ("收錄專輯", false)
+            case .track:
+                return ("歌曲名稱", true)
+            case .releaseDate:
+                return ("發行日期", true)
+            }
+        }
+    }
+
     func didTapMoreButton(title: String) {
-        let url = (title == "歌手") ? model.artistViewURL : model.collectionViewURL
+        let url = (title == DetailInfoType.artist.property.title) ? model.artistViewURL : model.collectionViewURL
         let vc = PreviewViewController(title: title, url: url)
         vc.modalPresentationStyle = .overFullScreen
         present(vc, animated: true)

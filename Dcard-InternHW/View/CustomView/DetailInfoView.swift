@@ -7,26 +7,21 @@
 
 import UIKit
 
-
-protocol moreButtonDelegate: AnyObject {
+protocol MoreButtonDelegate: AnyObject {
     func didTapMoreButton(title: String)
 }
 
 class DetailInfoView: UIView {
     // MARK: - Init property
-    weak var delegate: moreButtonDelegate?
-    private let frameView: UIView = {
-        let view = UIView()
-        view.isUserInteractionEnabled = true
-        return view
-    }()
+    weak var delegate: MoreButtonDelegate?
     
-    private let mainLabel: UILabel = {
+    // MARK: - View property
+    private let titleLabel: UILabel = {
         let label = UILabel()
         label.textColor = .customBlack
         label.textAlignment = .left
         label.numberOfLines = 1
-        label.font = UIFont.PingFangTC(fontSize: 14, weight: .Regular)
+        label.font = UIFont.PingFangTC(fontSize: 14, weight: .regular)
         return label
     }()
     
@@ -36,13 +31,13 @@ class DetailInfoView: UIView {
         label.textAlignment = .left
         label.numberOfLines = 0
         label.lineBreakMode = .byCharWrapping
-        label.font = UIFont.PingFangTC(fontSize: 16, weight: .Medium)
+        label.font = UIFont.PingFangTC(fontSize: 16, weight: .medium)
         return label
     }()
     
     private lazy var moreButton: UIButton = {
         let button = UIButton()
-        button.setAttributedTitle(NSAttributedString(string: "暸解更多", attributes: [.font: UIFont.PingFangTC(fontSize: 14, weight: .Semibold), .foregroundColor: UIColor.customBlue, .underlineStyle: NSUnderlineStyle.single.rawValue, .underlineColor: UIColor.customBlue ]), for: .normal)
+        button.setAttributedTitle(NSAttributedString(string: "暸解更多", attributes: [.font: UIFont.PingFangTC(fontSize: 14, weight: .semibold), .foregroundColor: UIColor.customBlue, .underlineStyle: NSUnderlineStyle.single.rawValue, .underlineColor: UIColor.customBlue ]), for: .normal)
         button.addTarget(self, action: #selector(moreButtonDidTap), for: .touchUpInside)
         return button
     }()
@@ -54,9 +49,9 @@ class DetailInfoView: UIView {
     }()
     
     // MARK: - View Cycle
-    init(main: String, content: String, moreButtonHide: Bool = false) {
+    init(title: String, content: String, moreButtonHide: Bool) {
         super.init(frame: .zero)
-        mainLabel.text = main
+        titleLabel.text = title
         contentLabel.text = content
         moreButton.isHidden = moreButtonHide
         setupUI()
@@ -68,9 +63,9 @@ class DetailInfoView: UIView {
     
     // MARK: - Function
     private func setupUI() {
-        addSubviews([mainLabel, contentLabel, moreButton, seperatorView])
+        addSubviews([titleLabel, contentLabel, moreButton, seperatorView])
         
-        mainLabel.snp.makeConstraints { make in
+        titleLabel.snp.makeConstraints { make in
             make.top.leading.equalToSuperview()
             make.bottom.equalTo(contentLabel.snp.top).offset(-4)
         }
@@ -96,7 +91,8 @@ class DetailInfoView: UIView {
         }
     }
     
+    
     @objc private func moreButtonDidTap(_ sender: UIButton) {
-        delegate?.didTapMoreButton(title: mainLabel.text ?? "")
+        delegate?.didTapMoreButton(title: titleLabel.text ?? "")
     }
 }

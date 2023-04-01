@@ -9,9 +9,9 @@ import UIKit
 
 extension UIFont {
     enum FontWeight: String {
-        case Regular = "PingFangTC-Regular"
-        case Medium = "PingFangTC-Medium"
-        case Semibold = "PingFangTC-Semibold"
+        case regular = "PingFangTC-Regular"
+        case medium = "PingFangTC-Medium"
+        case semibold = "PingFangTC-Semibold"
     }
     static func PingFangTC(fontSize size: CGFloat, weight fontName: FontWeight) -> UIFont {
         return UIFont(name: fontName.rawValue, size: size) ?? UIFont.systemFont(ofSize: size)

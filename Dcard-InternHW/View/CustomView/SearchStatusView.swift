@@ -24,7 +24,7 @@ class SearchStatusView: UIView {
         label.numberOfLines = 1
         label.textAlignment = .center
         label.textColor = .customBlack
-        label.font = UIFont.PingFangTC(fontSize: 20, weight: .Semibold)
+        label.font = UIFont.PingFangTC(fontSize: 20, weight: .semibold)
         return label
     }()
     
@@ -33,7 +33,7 @@ class SearchStatusView: UIView {
         label.numberOfLines = 1
         label.textAlignment = .center
         label.textColor = .customBlack
-        label.font = UIFont.PingFangTC(fontSize: 14, weight: .Regular)
+        label.font = UIFont.PingFangTC(fontSize: 14, weight: .regular)
         return label
     }()
     
@@ -50,7 +50,7 @@ class SearchStatusView: UIView {
     
     private func setupUI() {
         addSubviews([statusImageView, statusTitleLabel, statusSubTitleLabel])
-        
+
         statusImageView.snp.makeConstraints { make in
             make.center.equalToSuperview()
             make.height.width.equalTo(120)
@@ -72,11 +72,11 @@ class SearchStatusView: UIView {
     }
 }
 
-enum SearchStatus: Equatable{
+enum SearchStatus: Equatable {
     case initial
     case notFound
     case searching
-    case apiError(message: String)
+    case apiError(title: String)
     
     var property: (image: UIImage?, title: String, subtitle: String) {
         switch self {
@@ -95,9 +95,9 @@ enum SearchStatus: Equatable{
                     "搜尋中...",
                     "請耐心等候")
             
-        case .apiError(let message):
+        case .apiError(let title):
             return (UIImage(named: "search_error"),
-                    message,
+                    title,
                     "請稍後再試")
         }
     }
