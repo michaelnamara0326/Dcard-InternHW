@@ -7,33 +7,21 @@
 
 import Alamofire
 
-protocol RouterType {
-    var baseURL: String { get }
+struct NetworkManager<Router: RouterType> {
+    let reachabilityManager: NetworkReachabilityManager?
+    let decoder: JSONDecoder
     
-    var path: String { get }
+    init(reachabilityManager: NetworkReachabilityManager? = NetworkReachabilityManager.default, decoder: JSONDecoder = JSONDecoder()) {
+        self.reachabilityManager = reachabilityManager
+        self.decoder = decoder
+    }
     
-    var method: HTTPMethod { get }
-    
-    var encoding: ParameterEncoding { get }
-    
-    var param: [String: Any]? { get }
-    
-    var header: HTTPHeaders? { get }
-}
-
-class NetworkManager<Router: RouterType> {
-    let reachability = NetworkReachabilityManager()
-    let decoder = JSONDecoder()
-    
-    func requestData<T: Decodable>(_ router: Router, completion: @escaping (T?, NetworkError?) -> Void) {
-        let urlString = router.baseURL + router.path
-        decoder.dateDecodingStrategy = .iso8601
-        
-        guard let reachability = reachability,
-              reachability.isReachable else { /// Check user internet first
-            completion(nil, .disconnectInternet)
-            return
+    func requestData<T: Decodable>(_ router: Router, completion: @escaping (Result<T, NetworkError>) -> Void) {
+        guard (reachabilityManager?.isReachable ?? false) else { // Check user internet first
+            return completion(.failure(.disconnectInternet))
         }
+
+        let urlString = router.baseURL + router.path
         AF.request(urlString,
                    method: router.method,
                    parameters: router.param,
@@ -43,9 +31,9 @@ class NetworkManager<Router: RouterType> {
             .responseDecodable(of: T.self, decoder: decoder) { response in
                 switch response.result {
                 case .success(let data):
-                    completion(data, nil)
+                    completion(.success(data))
                 case .failure(let error):
-                    completion(nil, self.transferAFError(error))
+                    completion(.failure(self.transferAFError(error)))
                 }
             }
     }
@@ -56,7 +44,14 @@ class NetworkManager<Router: RouterType> {
             return .invalidURL
             
         case .responseValidationFailed(reason: .unacceptableStatusCode(let code)):
-            return .serverError(code)
+            switch code {
+            case 400...499:
+                return .clientError(code)
+            case 500...599:
+                return .serverError(code)
+            default:
+                return .defaultError(error)
+            }
             
         case .responseSerializationFailed(reason: .decodingFailed(let error)):
             return .decodingFailed(error)
@@ -65,7 +60,7 @@ class NetworkManager<Router: RouterType> {
             return .requestFailed(error)
             
         default:
-            return .defaultError
+            return .defaultError(error)
         }
     }
 }

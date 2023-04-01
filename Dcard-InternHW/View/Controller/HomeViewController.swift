@@ -12,18 +12,18 @@ import RxCocoa
 
 class HomeViewController: UIViewController {
     //  MARK: - Init property
-    private let viewModel = ItunesViewModel()
-    private let disposeBag = DisposeBag()
-    private var isLoading = false
     private var totalPage = 1
     private var currentPage = 1
     private let pageItemLimit = 10
-    private var searchResults = [ItunesResultModel]() {
+    private var isLoadingPage = false
+    private var searchResults = [ItunesSearchResultModel]() {
         didSet {
             let total = searchResults.count / pageItemLimit
             totalPage = searchResults.count.isMultiple(of: pageItemLimit) ? total : total + 1
         }
     }
+    private let viewModel = ItunesViewModel()
+    private let disposeBag = DisposeBag()
     private var tableViewDataSource: UITableViewDiffableDataSource<Section, Item>?
     
     //  MARK: - UI property
@@ -36,8 +36,8 @@ class HomeViewController: UIViewController {
     private let searchBar: UISearchBar = {
         let searchBar = UISearchBar()
         searchBar.searchBarStyle = .minimal
-        searchBar.searchTextField.attributedPlaceholder = NSAttributedString(string: "搜尋", attributes: [.foregroundColor: UIColor.customGray, .font: UIFont.PingFangTC(fontSize: 17, weight: .Regular)])
-        searchBar.searchTextField.font = UIFont.PingFangTC(fontSize: 17, weight: .Regular)
+        searchBar.searchTextField.attributedPlaceholder = NSAttributedString(string: "搜尋", attributes: [.foregroundColor: UIColor.customGray, .font: UIFont.PingFangTC(fontSize: 17, weight: .regular)])
+        searchBar.searchTextField.font = UIFont.PingFangTC(fontSize: 17, weight: .regular)
         searchBar.setImage(UIImage(named: "search_icon"), for: .search, state: .normal)
         searchBar.searchTextField.textColor = .customGray
         return searchBar
@@ -59,7 +59,7 @@ class HomeViewController: UIViewController {
         let label = UILabel()
         label.numberOfLines = 1
         label.textColor = .customGray
-        label.font = UIFont.PingFangTC(fontSize: 15, weight: .Regular)
+        label.font = UIFont.PingFangTC(fontSize: 15, weight: .regular)
         return label
     }()
     
@@ -78,14 +78,15 @@ class HomeViewController: UIViewController {
         return indicator
     }()
     
-    private let noMoreDataLabel: UILabel = {
+    private lazy var noMoreDataLabel: UILabel = {
         let label = UILabel()
-        label.frame.size.height = 20
         label.numberOfLines = 1
-        label.text = "已經沒有更多內容啦"
-        label.font = UIFont.PingFangTC(fontSize: 14, weight: .Medium)
+        label.text = "已經沒有更多內容啦 ↑"
+        label.font = UIFont.PingFangTC(fontSize: 15, weight: .medium)
         label.textColor = .customBlue
         label.textAlignment = .center
+        label.isUserInteractionEnabled = true
+        label.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(backToTop)))
         return label
     }()
     
@@ -157,10 +158,10 @@ class HomeViewController: UIViewController {
             }
         }).disposed(by: disposeBag)
         
-        infoTableView.rx.itemSelected.subscribe(onNext: { [unowned self] indexPath in
-            self.viewModel.lookUp(trackID: searchResults[indexPath.row].trackID ?? 0)
+        infoTableView.rx.itemSelected.subscribe(onNext: { [unowned self] in
+            self.viewModel.lookUp(trackID: searchResults[$0.row].trackID ?? 0)
         }).disposed(by: disposeBag)
-        
+
         resetButton.rx.tap.subscribe(onNext: { [unowned self] in
             self.reset(resetButton)
         }).disposed(by: disposeBag)
@@ -189,6 +190,33 @@ class HomeViewController: UIViewController {
         viewModel.isLoading.bind(to: loadingIndicator.rx.isAnimating).disposed(by: disposeBag)
     }
     
+    private func reset(_ sender: UIButton? = nil) {
+        if sender == resetButton {
+            searchBar.text = ""
+            statusView.status = .initial
+        }
+        currentPage = 1
+        searchResults = []
+        infoTableView.isHidden = true
+        noMoreDataLabel.isHidden = true
+        infoTableView.setContentOffset(.zero, animated: true)
+    }
+    
+    @objc private func backToTop() {
+        infoTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+    }
+}
+
+    //  MARK: - TableView Diffable DataSource
+extension HomeViewController {
+    private enum Section {
+        case main
+    }
+    
+    private enum Item: Hashable {
+        case main(ItunesSearchResultModel)
+    }
+    
     private func configureDataSource() {
         self.tableViewDataSource = UITableViewDiffableDataSource(tableView: infoTableView, cellProvider: { tableView, indexPath, itemIdentifier in
             switch itemIdentifier {
@@ -204,7 +232,7 @@ class HomeViewController: UIViewController {
         var maxIndex = currentPage * pageItemLimit
         if maxIndex >= searchResults.count {
             maxIndex = searchResults.count
-            infoTableView.tableFooterView = noMoreDataLabel
+            noMoreDataLabel.isHidden = false
         }
         
         var snapShot = NSDiffableDataSourceSnapshot<Section, Item>()
@@ -212,54 +240,54 @@ class HomeViewController: UIViewController {
         snapShot.appendSections([.main])
         snapShot.appendItems(items, toSection: .main)
         tableViewDataSource?.apply(snapShot, animatingDifferences: true) {
-            self.currentPage += 1
+            self.isLoadingPage = false
             self.infoTableView.isHidden = false
-            self.isLoading = false
             self.paginationIndicator.stopAnimating()
         }
-    }
-    
-    private func reset(_ sender: UIButton? = nil) {
-        if sender == resetButton {
-            searchBar.text = ""
-            statusView.status = .initial
-        }
-        totalPage = 1
-        currentPage = 1
-        searchResults = []
-        infoTableView.isHidden = true
-        infoTableView.setContentOffset(.zero, animated: true)
-        infoTableView.tableFooterView = self.paginationIndicator
-    }
-}
-
-    //  MARK: - TableView Diffable DataSource
-extension HomeViewController {
-    private enum Section {
-        case main
-    }
-    private enum Item: Hashable {
-        case main(ItunesResultModel)
     }
 }
 
     //  MARK: - TableView Delegate
 extension HomeViewController: UITableViewDelegate, UIScrollViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let view = UIView(frame: CGRect(x: 16, y: 8, width: tableView.frame.width, height: 20))
-        resultsCountLabel.frame = view.frame
+        let view = UIView()
         view.addSubview(resultsCountLabel)
+        resultsCountLabel.snp.makeConstraints { make in
+            make.top.leading.equalToSuperview().offset(16)
+            make.bottom.trailing.equalToSuperview()
+        }
         return view
     }
+    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let view = UIView()
+        view.addSubviews([noMoreDataLabel, paginationIndicator])
+        noMoreDataLabel.snp.makeConstraints { make in
+            make.center.width.height.equalToSuperview()
+        }
+        paginationIndicator.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+        }
+        return view
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 30
+    }
 
-    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 50
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let offset = infoTableView.contentOffset.y
         let contentHeight = infoTableView.contentSize.height
         let tableHeight = infoTableView.frame.height
         let distanceToBottom = contentHeight - offset - tableHeight
         
-        if !isLoading && currentPage <= totalPage && contentHeight > tableHeight && distanceToBottom < 0 {
-            isLoading = true
+        if !isLoadingPage && currentPage < totalPage && contentHeight > tableHeight && distanceToBottom < 0 {
+            currentPage += 1
+            isLoadingPage = true
             paginationIndicator.startAnimating()
             
             DispatchQueue.main.asyncAfter(deadline: .now() + Double.random(in: 0.5 ..< 1.5)) { /// simulate the delay of fetching API

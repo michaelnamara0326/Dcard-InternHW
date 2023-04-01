@@ -21,7 +21,7 @@ class PreviewViewController: UIViewController {
         label.textAlignment = .center
         label.numberOfLines = 1
         label.lineBreakMode = .byTruncatingMiddle
-        label.font = UIFont.PingFangTC(fontSize: 16, weight: .Semibold)
+        label.font = UIFont.PingFangTC(fontSize: 16, weight: .semibold)
         return label
     }()
     
@@ -54,7 +54,7 @@ class PreviewViewController: UIViewController {
         return webView
     }()
     
-// MARK: - View Cycle
+    // MARK: - View Cycle
     init(title: String, url: URL?) {
         super.init(nibName: nil, bundle: nil)
         titleLabel.text = title
@@ -74,7 +74,7 @@ class PreviewViewController: UIViewController {
         navigationView.addShadow(opacity: 0.16, offset: CGSize(width: 0, height: 2), radius: 2)
     }
     
-// MARK: - Functions
+    // MARK: - Functions
     private func setupUI() {
         view.backgroundColor = .white
         view.addSubviews([navigationView, webView])
@@ -117,7 +117,7 @@ class PreviewViewController: UIViewController {
             }
             return
         }
-        self.webView.load(URLRequest(url: url, timeoutInterval: 3))
+        self.webView.load(URLRequest(url: url, timeoutInterval: 30))
     }
     
     @objc private func closeButtonDidTap(_ sender: UIButton) {
@@ -129,6 +129,7 @@ class PreviewViewController: UIViewController {
     }
 }
 
+    // MARK: - WKNavigationDelegate
 extension PreviewViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
         reloadButton.isHidden = true

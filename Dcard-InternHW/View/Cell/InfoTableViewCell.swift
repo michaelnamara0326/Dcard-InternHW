@@ -13,6 +13,7 @@ class InfoTableViewCell: UITableViewCell {
         let view = UIView()
         return view
     }()
+    
     private let collectionImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.layer.cornerRadius = 10
@@ -22,7 +23,7 @@ class InfoTableViewCell: UITableViewCell {
     
     private let infoIcons: [UIImageView] = {
         var imageViews: [UIImageView] = []
-        Info.allCases.forEach {
+        InfoType.allCases.forEach {
             let icon = UIImageView()
             icon.image = $0.property.image
             imageViews.append(icon)
@@ -32,7 +33,7 @@ class InfoTableViewCell: UITableViewCell {
     
     private let infoTitles: [UILabel] = {
         var labels: [UILabel] = []
-        Info.allCases.forEach {
+        InfoType.allCases.forEach {
             let label = UILabel()
             label.font = $0.property.font
             label.textColor = .black
@@ -107,7 +108,7 @@ class InfoTableViewCell: UITableViewCell {
     }
     
     private func setupInfoStackView() {
-        for i in 0 ..< Info.allCases.count {
+        for i in 0 ..< InfoType.allCases.count {
             let view = UIView()
             let icon = infoIcons[i]
             let title = infoTitles[i]
@@ -125,17 +126,17 @@ class InfoTableViewCell: UITableViewCell {
         }
     }
     
-    func configure(model: ItunesResultModel) {
+    func configure(model: ItunesSearchResultModel) {
         DispatchQueue.main.async {
             self.collectionImageView.sd_setImage(with: model.artworkURL100, placeholderImage: UIImage(named: "defaultImage_icon"))
-            self.infoTitles[Info.artist.rawValue].text = model.artistName ?? "-"
-            self.infoTitles[Info.track.rawValue].text = model.trackName ?? "-"
-            self.infoTitles[Info.collection.rawValue].text = model.collectionName ?? "-"
+            self.infoTitles[InfoType.artist.rawValue].text = model.artistName ?? "-"
+            self.infoTitles[InfoType.track.rawValue].text = model.trackName ?? "-"
+            self.infoTitles[InfoType.collection.rawValue].text = model.collectionName ?? "-"
         }
     }
 }
 extension InfoTableViewCell {
-    enum Info: Int, CaseIterable {
+    enum InfoType: Int, CaseIterable {
         case artist
         case track
         case collection
@@ -144,15 +145,15 @@ extension InfoTableViewCell {
             switch self {
             case .artist:
                 return (UIImage(named: "info_artist"),
-                        UIFont.PingFangTC(fontSize: 16, weight: .Semibold))
+                        UIFont.PingFangTC(fontSize: 16, weight: .semibold))
                 
             case .track:
                 return (UIImage(named: "info_track"),
-                        UIFont.PingFangTC(fontSize: 14, weight: .Medium))
+                        UIFont.PingFangTC(fontSize: 14, weight: .medium))
                 
             case .collection:
                 return (UIImage(named: "info_collection"),
-                        UIFont.PingFangTC(fontSize: 14, weight: .Regular))
+                        UIFont.PingFangTC(fontSize: 14, weight: .regular))
             }
         }
     }

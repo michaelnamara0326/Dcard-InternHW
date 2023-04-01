@@ -7,7 +7,7 @@ target 'Dcard-InternHW' do
     pod 'RxSwift', '6.5.0'
     pod 'RxCocoa', '6.5.0'
     pod 'SnapKit', '5.6.0'
-    pod 'Alamofire'
+    pod 'Alamofire', '5.6.4'
     pod 'SDWebImage', '5.15.0'
 
   # Pods for Dcard-InternHW
