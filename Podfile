@@ -16,9 +16,5 @@ target 'Dcard-InternHW' do
     inherit! :search_paths
     # Pods for testing
   end
-
-  target 'Dcard-InternHWUITests' do
-    # Pods for testing
-  end
-
+  
 end
