@@ -1,5 +1,3 @@
-# 2023 Dcard iOS Intern Homework
-
 ## 基本資訊 Information
 - 安裝
  
