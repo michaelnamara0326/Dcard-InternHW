@@ -2,7 +2,7 @@
 - 安裝
  
 ```
-git clone https://github.com/qazwsx19263/Dcard-InternHW.git
+git clone https://github.com/michaelnamara0326/Dcard-InternHW.git
 pod install
 open xcworkspace
 ```
