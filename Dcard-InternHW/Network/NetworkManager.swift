@@ -6,6 +6,7 @@
 //
 
 import Alamofire
+import Foundation
 
 struct NetworkManager<Router: RouterType> {
     let reachabilityManager: NetworkReachabilityManager?

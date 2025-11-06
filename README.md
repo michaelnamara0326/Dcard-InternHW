@@ -1,12 +1,5 @@
 ## 基本資訊 Information
-- 安裝
- 
-```
-git clone https://github.com/michaelnamara0326/Dcard-InternHW.git
-pod install
-open xcworkspace
-```
- 
+
 - 開發環境  
   | 名稱  | 版本 |
   |  :--- | ---: |
