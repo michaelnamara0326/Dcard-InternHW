@@ -12,6 +12,11 @@
 		4C8592FE297ABF8D0045E53A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8592FD297ABF8D0045E53A /* AppDelegate.swift */; };
 		4C859307297ABF8F0045E53A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4C859306297ABF8F0045E53A /* Assets.xcassets */; };
 		4C85930A297ABF8F0045E53A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C859308297ABF8F0045E53A /* LaunchScreen.storyboard */; };
+		4C8CEBA72EBD30F500E08649 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 4C8CEBA62EBD30F500E08649 /* SDWebImage */; };
+		4C8CEBAA2EBD311A00E08649 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 4C8CEBA92EBD311A00E08649 /* Alamofire */; };
+		4C8CEBAD2EBD314900E08649 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 4C8CEBAC2EBD314900E08649 /* SnapKit */; };
+		4C8CEBB02EBD319900E08649 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 4C8CEBAF2EBD319900E08649 /* RxCocoa */; };
+		4C8CEBB22EBD319900E08649 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 4C8CEBB12EBD319900E08649 /* RxSwift */; };
 		4C9DC386298E5113002A3182 /* Date + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9DC385298E5113002A3182 /* Date + Extensions.swift */; };
 		4C9F6736297C2EBA00496DEF /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9F6735297C2EBA00496DEF /* HomeViewController.swift */; };
 		4C9F673A297C319400496DEF /* UIcolor + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9F6739297C319400496DEF /* UIcolor + Extensions.swift */; };
@@ -33,7 +38,6 @@
 		4CF82602297E83E20041BD32 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF82601297E83E20041BD32 /* NetworkManager.swift */; };
 		4CF82604297E84050041BD32 /* ItunesRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF82603297E84050041BD32 /* ItunesRouter.swift */; };
 		928B076A01E5155E5C1B7A6B /* Pods_Dcard_InternHWTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A5F08C29DC9835EB88B9E18 /* Pods_Dcard_InternHWTests.framework */; };
-		DE7A2B78E794756EB7882900 /* Pods_Dcard_InternHW.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48ECB272C37FD98C895638DA /* Pods_Dcard_InternHW.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,11 +51,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		19E423E4873006652B77913C /* Pods-Dcard-InternHW.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dcard-InternHW.debug.xcconfig"; path = "Target Support Files/Pods-Dcard-InternHW/Pods-Dcard-InternHW.debug.xcconfig"; sourceTree = "<group>"; };
 		378C40880D6D73F59A80315B /* Pods_Dcard_InternHW_Dcard_InternHWUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Dcard_InternHW_Dcard_InternHWUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		3A58F29A1D3F23B0510D64DB /* Pods-Dcard-InternHWTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dcard-InternHWTests.release.xcconfig"; path = "Target Support Files/Pods-Dcard-InternHWTests/Pods-Dcard-InternHWTests.release.xcconfig"; sourceTree = "<group>"; };
 		3A5F08C29DC9835EB88B9E18 /* Pods_Dcard_InternHWTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Dcard_InternHWTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		3C51D375636BA94C48853901 /* Pods-Dcard-InternHWTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dcard-InternHWTests.debug.xcconfig"; path = "Target Support Files/Pods-Dcard-InternHWTests/Pods-Dcard-InternHWTests.debug.xcconfig"; sourceTree = "<group>"; };
 		48ECB272C37FD98C895638DA /* Pods_Dcard_InternHW.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Dcard_InternHW.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C0018FC298699B1009D7CC0 /* DetailInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailInfoView.swift; sourceTree = "<group>"; };
 		4C53187C29D84227007C0AB0 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
@@ -81,9 +82,6 @@
 		4CC8592429D57FF60075852B /* ResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseModel.swift; sourceTree = "<group>"; };
 		4CF82601297E83E20041BD32 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		4CF82603297E84050041BD32 /* ItunesRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItunesRouter.swift; sourceTree = "<group>"; };
-		643799AA19B9093EA31B61B1 /* Pods-Dcard-InternHW.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dcard-InternHW.release.xcconfig"; path = "Target Support Files/Pods-Dcard-InternHW/Pods-Dcard-InternHW.release.xcconfig"; sourceTree = "<group>"; };
-		66C96AFA785414FE83A74080 /* Pods-Dcard-InternHW-Dcard-InternHWUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dcard-InternHW-Dcard-InternHWUITests.debug.xcconfig"; path = "Target Support Files/Pods-Dcard-InternHW-Dcard-InternHWUITests/Pods-Dcard-InternHW-Dcard-InternHWUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		77C9694A03F9EB992BD30467 /* Pods-Dcard-InternHW-Dcard-InternHWUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dcard-InternHW-Dcard-InternHWUITests.release.xcconfig"; path = "Target Support Files/Pods-Dcard-InternHW-Dcard-InternHWUITests/Pods-Dcard-InternHW-Dcard-InternHWUITests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,7 +89,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DE7A2B78E794756EB7882900 /* Pods_Dcard_InternHW.framework in Frameworks */,
+				4C8CEBB22EBD319900E08649 /* RxSwift in Frameworks */,
+				4C8CEBAA2EBD311A00E08649 /* Alamofire in Frameworks */,
+				4C8CEBAD2EBD314900E08649 /* SnapKit in Frameworks */,
+				4C8CEBB02EBD319900E08649 /* RxCocoa in Frameworks */,
+				4C8CEBA72EBD30F500E08649 /* SDWebImage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -112,7 +114,6 @@
 				4C8592FC297ABF8D0045E53A /* Dcard-InternHW */,
 				4C859313297ABF900045E53A /* Dcard-InternHWTests */,
 				4C8592FB297ABF8D0045E53A /* Products */,
-				F38439CE8DE8B005DFDAACC1 /* Pods */,
 				F9C8DE9105F5EA06D90DAE5F /* Frameworks */,
 			);
 			sourceTree = "<group>";
@@ -254,19 +255,6 @@
 			path = Router;
 			sourceTree = "<group>";
 		};
-		F38439CE8DE8B005DFDAACC1 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				19E423E4873006652B77913C /* Pods-Dcard-InternHW.debug.xcconfig */,
-				643799AA19B9093EA31B61B1 /* Pods-Dcard-InternHW.release.xcconfig */,
-				66C96AFA785414FE83A74080 /* Pods-Dcard-InternHW-Dcard-InternHWUITests.debug.xcconfig */,
-				77C9694A03F9EB992BD30467 /* Pods-Dcard-InternHW-Dcard-InternHWUITests.release.xcconfig */,
-				3C51D375636BA94C48853901 /* Pods-Dcard-InternHWTests.debug.xcconfig */,
-				3A58F29A1D3F23B0510D64DB /* Pods-Dcard-InternHWTests.release.xcconfig */,
-			);
-			path = Pods;
-			sourceTree = "<group>";
-		};
 		F9C8DE9105F5EA06D90DAE5F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -284,11 +272,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4C859324297ABF900045E53A /* Build configuration list for PBXNativeTarget "Dcard-InternHW" */;
 			buildPhases = (
-				BC9AE5469D4C397584E55496 /* [CP] Check Pods Manifest.lock */,
 				4C8592F6297ABF8D0045E53A /* Sources */,
 				4C8592F7297ABF8D0045E53A /* Frameworks */,
 				4C8592F8297ABF8D0045E53A /* Resources */,
-				1C5C258F487381130CF7A527 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -346,6 +332,12 @@
 				Base,
 			);
 			mainGroup = 4C8592F1297ABF8D0045E53A;
+			packageReferences = (
+				4C8CEBA52EBD30F400E08649 /* XCRemoteSwiftPackageReference "SDWebImage" */,
+				4C8CEBA82EBD311A00E08649 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				4C8CEBAB2EBD314900E08649 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				4C8CEBAE2EBD319900E08649 /* XCRemoteSwiftPackageReference "RxSwift" */,
+			);
 			productRefGroup = 4C8592FB297ABF8D0045E53A /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -392,45 +384,6 @@
 			);
 			outputPaths = (
 				"$(DERIVED_FILE_DIR)/Pods-Dcard-InternHWTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		1C5C258F487381130CF7A527 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Dcard-InternHW/Pods-Dcard-InternHW-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Dcard-InternHW/Pods-Dcard-InternHW-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Dcard-InternHW/Pods-Dcard-InternHW-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		BC9AE5469D4C397584E55496 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Dcard-InternHW-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -615,14 +568,13 @@
 		};
 		4C859325297ABF900045E53A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 19E423E4873006652B77913C /* Pods-Dcard-InternHW.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = HFJM9B968C;
+				DEVELOPMENT_TEAM = QDSF54896X;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Dcard-InternHW/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -644,6 +596,7 @@
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -652,14 +605,13 @@
 		};
 		4C859326297ABF900045E53A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 643799AA19B9093EA31B61B1 /* Pods-Dcard-InternHW.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = HFJM9B968C;
+				DEVELOPMENT_TEAM = QDSF54896X;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Dcard-InternHW/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -681,6 +633,7 @@
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -689,7 +642,6 @@
 		};
 		4C859328297ABF900045E53A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3C51D375636BA94C48853901 /* Pods-Dcard-InternHWTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -713,7 +665,6 @@
 		};
 		4C859329297ABF900045E53A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3A58F29A1D3F23B0510D64DB /* Pods-Dcard-InternHWTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -766,6 +717,69 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		4C8CEBA52EBD30F400E08649 /* XCRemoteSwiftPackageReference "SDWebImage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImage.git";
+			requirement = {
+				kind = exactVersion;
+				version = 5.15.0;
+			};
+		};
+		4C8CEBA82EBD311A00E08649 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = exactVersion;
+				version = 5.6.4;
+			};
+		};
+		4C8CEBAB2EBD314900E08649 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = exactVersion;
+				version = 5.6.0;
+			};
+		};
+		4C8CEBAE2EBD319900E08649 /* XCRemoteSwiftPackageReference "RxSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ReactiveX/RxSwift.git";
+			requirement = {
+				kind = exactVersion;
+				version = 6.5.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		4C8CEBA62EBD30F500E08649 /* SDWebImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4C8CEBA52EBD30F400E08649 /* XCRemoteSwiftPackageReference "SDWebImage" */;
+			productName = SDWebImage;
+		};
+		4C8CEBA92EBD311A00E08649 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4C8CEBA82EBD311A00E08649 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+		4C8CEBAC2EBD314900E08649 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4C8CEBAB2EBD314900E08649 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+		4C8CEBAF2EBD319900E08649 /* RxCocoa */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4C8CEBAE2EBD319900E08649 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxCocoa;
+		};
+		4C8CEBB12EBD319900E08649 /* RxSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4C8CEBAE2EBD319900E08649 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 4C8592F2297ABF8D0045E53A /* Project object */;
 }
